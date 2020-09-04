@@ -63,6 +63,21 @@ app.get('/api/intake', function (req, res) {
       });
 });
 
+app.post('/api/intake', function (req, res) {
+  if(req.body.food != '' && typeof req.body.food !== 'undefined') {
+    db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber) VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}') RETURNING *`)
+    .then(function (result) {
+      console.log(result);
+    });
+    res.send('OK');
+  }else {
+    res.send('user is missing intake');
+  }
+});
+
+
+
+
 // app.get('/api/user_intake', function (req, res) {
 //   db.query('SELECT artists.name AS artist_name, albums.name AS album_name, \
 //   albums.release_date, albums.genre FROM artists \
