@@ -76,41 +76,29 @@ app.post('/api/intake', function (req, res) {
 });
 
 
+app.get('/api/userdata', function (req, res) {
+  if(req.body.id != '' && typeof req.body.id != undefined) {
+    db.query(`SELECT id FROM users WHERE id = ${req.body.id}`)
+      .then(function(result) {
+          if(result.length != 0) {
+              db.query(` SELECT * 
+              FROM users FULL JOIN intake 
+              ON users.id = intake.user_id
+              WHERE users.id =${req.body.id}`)
+                .then(function (result) {
+                  console.log(result);
+                  res.json(result);
+              });
+          }
+          else {
+              res.send('User not found');
+          }
+      })
+  }else {
+    res.send('Select a user');
+  }
+});
 
-
-// app.get('/api/user_intake', function (req, res) {
-//   db.query('SELECT artists.name AS artist_name, albums.name AS album_name, \
-//   albums.release_date, albums.genre FROM artists \
-//   JOIN albums_artists on albums_artists.artist_id = artists.id \
-//   JOIN albums on albums.id = albums_artists.album_id')
-//       .then(function (results) {
-//         res.json(results);
-//       });
-// });
-
-// app.post('/api/artists_albums', function (req, res) {
-
-//   if ( req.body.name != '' && typeof req.body.name !== 'undefined' ) {
-//     db.query(`SELECT artists.name AS artist_name, albums.name AS album_name, \
-//     albums.release_date, albums.genre FROM artists \
-//     JOIN albums_artists on albums_artists.artist_id = artists.id \
-//     JOIN albums on albums.id = albums_artists.album_id WHERE artists.name = '${req.body.name}'`)
-//         .then(function (results) {
-//           res.json(results);
-//         });
-//   } else if ( req.body.album_id != '' && typeof req.body.album_id !== 'undefined' &&
-//              req.body.artist_id != '' && typeof req.body.artist_id !== 'undefined') {
-
-//     db.query(`INSERT INTO albums_artists("artist_id", "album_id") \
-//     VALUES(${req.body.artist_id}, ${req.body.album_id})`)
-//     .then(function (results) {
-//       res.send('OK');
-//     });
-
-//   } else {
-//     res.send('fail');
-//   }   
-// });
 
 app.listen(portNumber, function() {
   console.log(`My API is listening on port ${portNumber}.... `);
