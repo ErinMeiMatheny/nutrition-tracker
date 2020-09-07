@@ -2,6 +2,8 @@ const express = require('express');
 const app = express();
 const promise = require('bluebird');
 var bodyParser = require('body-parser')
+
+app.set("view-engine", "html")
 // const bcrypt = require('bcrypt');
 
 // const sequalizeDB = require("./models")
