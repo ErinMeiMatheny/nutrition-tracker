@@ -2,34 +2,249 @@
 <html lang="en">
 
 <head>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Bootstrap 4 Website</title>
 
-    <title>Document</title>
+    <!-- JQuery -->
+    <script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
+    <!-- Bootstrap 4.4.1 -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.css">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.js"></script>
+
+    <!-- Fontawesome 5.11.2 -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+    <link rel="stylesheet" href="style.css">
 </head>
+<!------------------------------HEAD-------------------------------->
 
 <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+        <a class="navbar-brand" href="#">
+            <!-- <img src="/fullstack-project/images/body-weighing-scale.jpg" width="30" height="30" -->
+                <!-- class="d-inline-block align-top" alt="" loading="lazy">
+            fitness -->
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
 
-    <div class='container'>
-        <div class='row'>
-            <input id="search" type="search" placeholder="Enter food" aria-label="Search">
-            <button id= 'searchButton' type="button" class="btn btn-light">Search Food</button>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item active">
+                    <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="#">Link</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button"
+                        data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Dropdown
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="#">Action</a>
+                        <a class="dropdown-item" href="#">Another action</a>
+                        <div class="dropdown-divider"></div>
+                        <a class="dropdown-item" href="#">Something else here</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">Disabled</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
         </div>
-        <div id = 'results'>
+    </nav>
+    <!-- Navigation -->
 
+
+    <!---------------carousel------------->
+    <div id="carouselExampleSlidesOnly" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <!-- <img src="/fullstack-project/images/healthyfoods.png" class="d-block w-100 h-50" alt="..."> -->
+            </div>
+            <div class="carousel-item">
+                <!-- <img src="/fullstack-project/images/differenct color fruits.jpg" class="d-block w-100 h-50" alt="..."> -->
+            </div>
+            <div class="carousel-item">
+                <!-- <img src="/fullstack-project/images/foods.jpg" class="d-block w-100 h-50" alt="..."> -->
+            </div>
         </div>
     </div>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-        crossorigin="anonymous"></script>
+
+    <!-- Content -->
+    <div class="container-fluid p-0">
+        <div class="jumbotron jumbotron-fluid bg-light">
+            <div class="container ">
+                <div class='row'>
+                    <input id="search" type="search" placeholder="Enter food" aria-label="Search">
+                    <button id='searchButton' type="button" class="btn btn-light">Search Food</button>
+                </div>
+                <div id='results'>
+
+                </div>
+                <h1 class="display-4 text-center">Macros</h1>
+                <p class="lead"></p>
+            </div>
+        </div>
+
+        <!-- cards -->
+
+        <div class="card-deck p-5">
+            <div class="card">
+                <!-- <img class="card-img-top" src="/fullstack-project/images/healthy-protein.jpg"  alt=""> -->
+                <div class="card-body">
+                    <h6 class="card-title">Protein</h6>
+                    <p class="card-text">
+                        Protein is a macronutrient that is essential to building muscle mass.
+                        It is commonly found in animal products, though is also present in other sources, such as nuts
+                        and legumes.
+                        There are three macronutrients: protein, fats and carbohydrates. Macronutrients provide
+                        calories, or energy.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+
+                        <h4>4 calories per gram</h4>
+                        <p><a class="btn btn-outline-info" href="#">enter</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <!-- <img class="card-img-top img-fluid height:auto" src="/fullstack-project/images/healthy-carbs.jpg" height= "100" alt=""> -->
+                <div class="card-body">
+                    <h6 class="card-title">Crabs</h6>
+                    <p class="card-text">
+                        Carbohydrates are the sugars, starches and fibers found in fruits, grains, vegetables and milk
+                        products.
+                        Though often maligned in trendy diets, carbohydrates — one of the basic food groups — are
+                        important to a healthy diet.
+                    </p>
+                    <hr>
+                    <div class="text-center">
+
+                        <h4>4 calories per gram</h4>
+                        <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card">
+                <!-- <img class="card-img-top" src="/fullstack-project/images/Healthy-fats.jpg"  alt=""> -->
+                <div class="card-body">
+                    <h6 class="card-title">Fats</h6>
+                    <p class="card-text">
+                        The primary function of fat is as an energy reserve. The body stores fat, or adipose tissue, as
+                        a result of excess calorie consumption.
+                        During exercise, the body first uses calories from carbohydrates for energy. After about 20
+                        minutes, it uses calories from stored fat to keep going.
+                        Fats also help the body absorb necessary fat-soluble vitamins (vitamins A, D, E and K),
+                    </p>
+                    <hr>
+                    <div class="text-center">
+
+                        <h4>9 calories per gram</h4>
+                        <p><a class="btn btn-outline-danger" href="#">enter</a></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-----------------------------footer------------------------------------------>
+    <footer class="container-fluid bg-dark p-5">
+        <div class="row">
+            <div class="col-sm-3">
+                <h6 class="text-secondary">Home</h6>
+                <hr>
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+            </div>
+
+            <div class="col-sm-3">
+                <h6 class="text-secondary">Blank#2</h6>
+                <hr>
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+            </div>
+
+            <div class="col-sm-3">
+                <h6 class="text-secondary">Blank#3</h6>
+                <hr>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+
+                <h6 class="text-secondary">example</h6>
+                <p>
+
+                </p>
+            </div>
+
+            <div class="col-sm-3" id="contactAnchor">
+                <h6 class="text-secondary">Contact</h6>
+                <hr>
+                <p>
+                    <i class="fas fa-envelope"></i> Fitness.com
+                </p>
+                <p>
+                    <i class="fas fa-camera"></i> instagram
+                    <br><i class="fab fa-facebook-square"></i> facebook
+                    <br><i class="fab fa-twitter-square"></i> twitter
+                    <br><i class="fab fa-google-plus-square"></i> google+
+                </p>
+            </div>
+
+        </div>
+
+        <p class="text-center">Fitness &copy; 2020</p>
+    </footer>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
         integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
         crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-        crossorigin="anonymous"></script>
-        <script type = 'text/javascript' src= 'app.js'></script>
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script type='text/javascript' src='app.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </body>
 
 </html>
