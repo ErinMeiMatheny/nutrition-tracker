@@ -2,11 +2,17 @@ const express = require('express');
 const app = express();
 const promise = require('bluebird');
 var bodyParser = require('body-parser')
+<<<<<<< HEAD
 
 app.set("view-engine", "html")
 // const bcrypt = require('bcrypt');
 
 // const sequalizeDB = require("./models")
+=======
+const bcrypt = require('bcrypt');
+
+const sequelizeDB = require("./models");
+>>>>>>> erin
 
 //Used for adding extra security
 const saltRounds = 10;
@@ -30,7 +36,11 @@ const config = {
     host: 'localhost',
     port: 5432,
     database: 'nutrition',
+<<<<<<< HEAD
     user: 'urias'
+=======
+    user: 'erin'
+>>>>>>> erin
 };
 
 // Load and initialize pg-promise:
@@ -46,6 +56,7 @@ app.use(express.static(__dirname + '/web'));
 
 let timestamp = new Date().toLocaleDateString()
 
+<<<<<<< HEAD
 
 
 
@@ -65,12 +76,21 @@ app.get('/api/posts', function (req, res) {
 //user authentication
 app.get('/api/users', (req, res) => {
     sequalizeDB.user.findAll()
+=======
+//user authentication
+// app.get('/', (req, res) => {
+//     res.json(users);
+// })
+app.get('/users', (req, res) => {
+    sequelizeDB.user.findAll()
+>>>>>>> erin
         .then((results) => {
             res.json(results);
         })
 })
 
 
+<<<<<<< HEAD
 app.get('/api/users/:id', (req, res) => {
 
     let id = req.params.id;
@@ -89,11 +109,18 @@ app.post('/register', (req, res) => {
         .then(function (user) {
             console.log(user);
         });
+=======
+//register user
+
+
+app.post('/api/register', (req, res) => {
+>>>>>>> erin
     if (!req.body.email) {
         res.status(404).send("Email is required");
     }
     if (!req.body.password) {
         res.status(404).send("Password is required");
+<<<<<<< HEAD
     }
     var username = req.body.username;
     var email = req.body.email;
@@ -108,6 +135,54 @@ app.post('/register', (req, res) => {
 
 
 
+=======
+    } if (!req.body.username) {
+        res.status(404).send("Username is required");
+    }
+
+    var email = req.body.email;
+    var password = req.body.password;
+    var username = req.body.username;
+
+    db.query(`SELECT * FROM users WHERE email = '${email}'`)
+        .then(function (results) {
+            if (!results[0]) {
+                bcrypt.hash(password, saltRounds, function (err, hash) {
+                    // Store hash in your password DB.
+                    password = hash;
+                    console.log(email, password)
+
+                    sequelizeDB.user.create({ username: username, email: email, password: hash })
+                        .then(function (user) {
+                            console.log(user)
+                            res.json({ status: "Successful Registration" });
+                        });
+                })
+            } else {
+                res.send('use a different email')
+            };
+        })
+
+
+})
+// app.post('/api/register', (req, res) => {
+//     if (!req.body.email) {
+//         res.status(404).send("Email is required");
+//     }
+//     if (!req.body.password) {
+//         res.status(404).send("Password is required");
+//     }
+//     var username = req.body.username;
+//     var email = req.body.email;
+//     var password = req.body.password;
+//     bcrypt.hash(password, saltRounds, function (err, hash) {
+//         db.user.create({ username: username, email: email, password: hash })
+//             .then(function (user) {
+//                 res.json({ status: "Successful Registration" });
+//             });
+//     });
+// })
+>>>>>>> erin
 
 
 app.post('/api/login', (req, res) => {
@@ -142,6 +217,23 @@ app.post('/api/login', (req, res) => {
 
 })
 
+<<<<<<< HEAD
+=======
+//returns non-deleted tweets
+app.get('/api/posts', function (req, res) {
+    db.query('SELECT * FROM posts WHERE is_tweet_deleted = FALSE')
+        .then(function (results) {
+            results.forEach(function (results) {
+                console.log(results.tweet);
+            });
+
+            res.json(results);
+        })
+
+});
+
+
+>>>>>>> erin
 //make a tweet
 app.post('/api/posts', function (req, res) {
     if (req.body.tweet != '' && typeof req.body.tweet !== 'undefined' && req.body.user_tweet != '') {
@@ -171,6 +263,17 @@ app.get(`/api/posts/:id`, function (req, res) {
 
 });
 
+<<<<<<< HEAD
+=======
+//retrieve a single user
+app.get('/api/users/:id', (req,res) => {
+    let id = req.params.id;
+    sequelizeDB.user.findByPk(id).then(function(user){
+        res.json(user);
+    })
+})
+
+>>>>>>> erin
 //delete a single tweet
 app.post(`/api/posts/:id`, function (req, res) {
     db.query(`UPDATE posts SET is_tweet_deleted = 'TRUE' WHERE id = ${req.params.id} AND user_tweet = '${req.body.user_tweet}'`)
@@ -206,6 +309,7 @@ app.post(`/api/replies/:id`, function (req, res) {
 
 });
 
+<<<<<<< HEAD
 
 
 
@@ -214,3 +318,8 @@ app.post(`/api/replies/:id`, function (req, res) {
 app.listen(portNumber, function () {
     console.log(`My API is listening on port ${portNumber}.... `);
 });
+=======
+app.listen(portNumber, function () {
+    console.log(`My API is listening on port ${portNumber}.... `);
+});
+>>>>>>> erin
