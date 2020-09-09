@@ -1,4 +1,10 @@
 node_modules
+<<<<<<< HEAD
 package.json
 package-lock.json
 .env
+=======
+
+package.json
+package-lock.json
+>>>>>>> erin

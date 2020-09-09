@@ -16,6 +16,9 @@ if (process.env.NODE_ENV !== 'production') {
     email => users.find(user => user.email === email),
     id => users.find(user => user.id === id)
   )
+
+  //static hosting for web folder
+  app.use(express.static(__dirname + '/web'));
   
   const users = []
   
