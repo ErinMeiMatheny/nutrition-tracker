@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const promise = require('bluebird');
+<<<<<<< HEAD
 var bodyParser = require('body-parser')
 <<<<<<< HEAD
 
@@ -23,16 +24,19 @@ app.use(bodyParser.urlencoded({ extended: false }))
 // parse application/json
 app.use(bodyParser.json())
 
+=======
+>>>>>>> erin
 const portNumber = process.env.PORT || 3000;
 
 // pg-promise initialization options:
 const initOptions = {
-    // Use a custom promise library, instead of the default ES6 Promise:
-    promiseLib: promise,
+  // Use a custom promise library, instead of the default ES6 Promise:
+  promiseLib: promise, 
 };
 
 // Database connection parameters:
 const config = {
+<<<<<<< HEAD
     host: 'localhost',
     port: 5432,
     database: 'nutrition',
@@ -40,6 +44,12 @@ const config = {
     user: 'urias'
 =======
     user: 'erin'
+>>>>>>> erin
+=======
+  host: 'localhost',
+  port: 5432,
+  database: 'nutrition',
+  user: 'erin'
 >>>>>>> erin
 };
 
@@ -52,6 +62,7 @@ const db = pgp(config);
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+<<<<<<< HEAD
 app.use(express.static(__dirname + '/web'));
 
 let timestamp = new Date().toLocaleDateString()
@@ -245,24 +256,35 @@ app.post('/api/posts', function (req, res) {
     } else {
         res.send('Enter a tweet');
     }
+=======
+app.use(express.static( __dirname + '/web'));
 
+app.get('/api/users', function (req, res) {
+  db.query('SELECT * FROM users')
+      .then(function (results) {
+        results.forEach(function (users) {
+          console.log(users.name);
+        });
+>>>>>>> erin
+
+        res.json(results);
+      });
 });
 
-//retrieve a single tweet
-app.get(`/api/posts/:id`, function (req, res) {
-    db.query(`SELECT posts.id, tweet, reply
-    FROM posts
-    INNER JOIN replies
-    ON posts.id = replies.opid
-    WHERE posts.id = ${req.params.id}`)
-        .then(function (results) {
-            res.json(results);
-            // console.log(results[0].tweet);
-            // res.send(results.tweet)
-        })
 
+app.post('/api/users', function (req, res) {
+  if(req.body.name != '' && typeof req.body.name !== 'undefined') {
+    db.query(`INSERT INTO users (name,age,height_in,weight_lbs,gender) VALUES ('${req.body.name}','${req.body.age}','${req.body.height_in}','${req.body.weight_lbs}','${req.body.gender}') RETURNING *`)
+    .then(function (result) {
+      console.log(result);
+    });
+    res.send('OK');
+  }else {
+    res.send('user needs a name');
+  }
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 =======
 //retrieve a single user
@@ -281,34 +303,53 @@ app.post(`/api/posts/:id`, function (req, res) {
             res.json(results);
             // console.log(results[0].tweet);
         })
+=======
+app.get('/api/intake', function (req, res) {
+  db.query('SELECT * FROM intake')
+      .then(function (results) {
+        results.forEach(function (intake) {
+          console.log(intake.food);
+        });
+>>>>>>> erin
 
+        res.json(results);
+      });
 });
 
-//creating a reply
-app.post('/api/replies', function (req, res) {
-    console.log(typeof timestamp)
-    if (req.body.reply != '' && typeof req.body.reply !== 'undefined' && req.body.opid != '') {
-        db.query(`INSERT INTO replies (opid, reply, date_of_reply, is_reply_deleted) VALUES ('${req.body.opid}','${req.body.reply}', '${timestamp}', 'FALSE') RETURNING *`)
-            .then(function (result) {
-                console.log(result);
-                res.send(result[0].reply);
-            });
-
-    } else {
-        res.send('Enter a reply');
-    }
-
+app.post('/api/intake', function (req, res) {
+    db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber,is_deleted) VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','FALSE') RETURNING *`)
+    .then(function (result) {
+      console.log(result);
+    });
+    res.send('OK');
+  
 });
 
-//delete a reply 
-app.post(`/api/replies/:id`, function (req, res) {
-    db.query(`UPDATE replies SET is_reply_deleted = 'TRUE' WHERE id = ${req.params.id}`)
-        .then(function (results) {
-            res.json(results);
-        })
 
+app.get('/api/userdata', function (req, res) {
+  if(req.body.id != '' && typeof req.body.id != undefined) {
+    db.query(`SELECT id FROM users WHERE id = ${req.body.id}`)
+      .then(function(result) {
+          if(result.length != 0) {
+              db.query(` SELECT * 
+              FROM users FULL JOIN intake 
+              ON users.id = intake.user_id
+              WHERE users.id =${req.body.id}`)
+                .then(function (result) {
+                  console.log(result);
+                  res.json(result);
+              });
+          }
+          else {
+              res.send('User not found');
+          }
+      })
+  }else {
+    res.send('Select a user');
+  }
 });
 
+<<<<<<< HEAD
 <<<<<<< HEAD
 
 
@@ -321,5 +362,11 @@ app.listen(portNumber, function () {
 =======
 app.listen(portNumber, function () {
     console.log(`My API is listening on port ${portNumber}.... `);
+});
+>>>>>>> erin
+=======
+
+app.listen(portNumber, function() {
+  console.log(`My API is listening on port ${portNumber}.... `);
 });
 >>>>>>> erin
