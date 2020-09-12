@@ -73,8 +73,3 @@ searchButton.addEventListener('click', function () {
     })
 })
 
-
-
-
-
-
