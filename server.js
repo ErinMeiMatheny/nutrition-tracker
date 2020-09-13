@@ -15,12 +15,9 @@ const initOptions = {
 const config = {
   host: 'localhost',
   port: 5432,
-  database: 'password',
+  database: 'nutrition',
   user: 'urias'
 };
-
-app.set('view-engine', 'ejs')
-app.use(express.static(__dirname + '/web'));
 
 // Load and initialize pg-promise:
 const pgp = require('pg-promise')(initOptions);
@@ -28,16 +25,43 @@ const pgp = require('pg-promise')(initOptions);
 // Create the database instance:
 const db = pgp(config);
 
-app.use(session({
-  secret: process.env.SECRET_KEY || 'tacocat',
-  resave: true,
-  saveUninitialized: false,
-  cookie: { maxAge: 60000 }
-}));
+//Calls ejs template and allows web folder to hold all javascript/image files
+app.set('view-engine', 'ejs')
+app.use(express.static(__dirname + '/web'));
 
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
+
+//const for our cookie
+const {
+  PORT = 3000,
+  NODE_ENV = 'development',
+  SESSION_NAME= 'sid',
+  SESSION_SECRET = 'tacocat',
+  SESSION_LIFETIME = 60000
+} = process.env
+
+const IN_PRODUCTION = NODE_ENV === 'PRODUCTION'
+
+
+//session
+app.use(session({
+  
+  name: SESSION_NAME,
+  resave: false,
+  saveUninitialized: false,
+  secret: SESSION_SECRET,
+  cookie: {
+     maxAge: SESSION_LIFETIME,
+     sameSite: true,
+     secure: IN_PRODUCTION
+    }
+    
+}));
+
+
+//encrypts password
 function encryptPassword(password) {
   var key = pbkdf2.pbkdf2Sync(
     password, "la7sdycfoialwbdfalwie7f", 36000, 256, 'sha256'
@@ -45,13 +69,23 @@ function encryptPassword(password) {
   return hash = key.toString('hex');
 }
 
-function authenticatedMiddleware(req, res, next) {
+//user authentication
+function redirectLogin(req, res, next) {
   // if user is authenticated let request pass
   if (req.session.user) {
     next();
   } else { // user is not authenticated send them to login
     console.log('user not authenticated');
-    res.redirect('/login.ejs');
+    res.render('index.ejs');
+  }
+}
+
+// redirects if user id is already authenticated
+function redirectHome(req, res, next) {
+  if (req.session.user) {
+    res.render('/users')
+  } else {
+    next()
   }
 }
 
@@ -63,28 +97,40 @@ function authorizedFinancialMiddleware(req, res, next) {
   }
 }
 
+//LANDING PAGE
 app.get('/', function (req, res) {
+  console.log(req.session)
+  const { userId } = req.session 
+
   res.render('index.ejs');
 });
 
-app.get('/login', function (req, res) {
+//USER PAGE AFTER LOGIN AUTHENTICATED
+app.get('/user', redirectLogin, function (req, res) {
+  res.render('user.ejs');
+});
+
+//LOGIN PAGE
+app.get('/login', redirectHome, function (req, res) {
   res.render('login.ejs')
 });
 
-app.post('/login', function (req, res) {
-  if( req.body.name && req.body.password ) {
+//POST YOUR LOGIN CREDENTIALS 
+app.post('/login', redirectHome, function (req, res) {
+  if( req.body.email && req.body.password ) {
     console.log(req.body);
     let encryptedPass = encryptPassword(req.body.password);
     db.one(
       `SELECT * FROM users WHERE 
-      username = '${req.body.name}' AND 
+      email = '${req.body.email}' AND 
       password = '${encryptedPass}'`
       ).then(function (response) {
         console.log(response);
         
         req.session.user = response;
 
-        res.send('worked');
+        res.render('user.ejs')
+        console.log(req.session)
       }).catch(function (error) {
         console.log(error);
         res.send('error');
@@ -94,20 +140,25 @@ app.post('/login', function (req, res) {
   }
 })
 
-app.get('/register', function (req, res) {
+
+//REGISTER PAGE
+app.get('/register', redirectHome, function (req, res) {
   res.render('register.ejs');
 });
 
-app.post('/register', function (req, res) {
+//REGISTER YOUR INFO TO OUR WEBSITE / DATABASE ROUTE
+app.post('/register', redirectHome, function (req, res) {
 
-  if( req.body.name && req.body.password ) {
+  if( req.body.name && req.body.password && req.body.email) {
 
     let encryptedPass = encryptPassword(req.body.password);
-    db.query(`INSERT INTO users (name, password) 
-    VALUES ('${req.body.name}', '${encryptedPass}')`)
+    db.query(`INSERT INTO users (name, email, password) 
+    VALUES ('${req.body.name}', '${req.body.email}','${encryptedPass}')`)
     .then(function (response) {
       console.log(response);
-      res.send('success');
+      
+      res.render('login.ejs')
+
     }).catch(function (error){
       console.log(error);
       res.send('error');
@@ -126,6 +177,12 @@ app.post('/register', function (req, res) {
 //   res.send('This comany has 1 million dollarz');
 // });
 
+//LOGS USER OUT
+app.post('/logout',redirectLogin, function (req,res) {
+  console.log("You are now logged out of your session")
+})
+
+//APP PORT LISTEN
 app.listen(portNumber, function() {
   console.log(`My API is listening on port ${portNumber}.... `);
 });
