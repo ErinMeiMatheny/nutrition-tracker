@@ -19,6 +19,9 @@ const config = {
   user: 'urias'
 };
 
+app.set('view-engine', 'ejs')
+app.use(express.static(__dirname + '/web'));
+
 // Load and initialize pg-promise:
 const pgp = require('pg-promise')(initOptions);
 
@@ -48,7 +51,7 @@ function authenticatedMiddleware(req, res, next) {
     next();
   } else { // user is not authenticated send them to login
     console.log('user not authenticated');
-    res.redirect('/login');
+    res.redirect('/login.ejs');
   }
 }
 
@@ -61,20 +64,20 @@ function authorizedFinancialMiddleware(req, res, next) {
 }
 
 app.get('/', function (req, res) {
-  res.render('./public/index.html');
+  res.render('index.ejs');
 });
 
 app.get('/login', function (req, res) {
-  res.send('Please login');
+  res.render('login.ejs')
 });
 
 app.post('/login', function (req, res) {
-  if( req.body.username && req.body.password ) {
+  if( req.body.name && req.body.password ) {
     console.log(req.body);
     let encryptedPass = encryptPassword(req.body.password);
     db.one(
       `SELECT * FROM users WHERE 
-      username = '${req.body.username}' AND 
+      username = '${req.body.name}' AND 
       password = '${encryptedPass}'`
       ).then(function (response) {
         console.log(response);
@@ -91,17 +94,17 @@ app.post('/login', function (req, res) {
   }
 })
 
-app.get('/sign-up', function (req, res) {
-  res.send('please sign up');
+app.get('/register', function (req, res) {
+  res.render('register.ejs');
 });
 
-app.post('/sign-up', function (req, res) {
+app.post('/register', function (req, res) {
 
-  if( req.body.username && req.body.password ) {
+  if( req.body.name && req.body.password ) {
 
     let encryptedPass = encryptPassword(req.body.password);
-    db.query(`INSERT INTO users (username, password, role) 
-    VALUES ('${req.body.username}', '${encryptedPass}', 'user')`)
+    db.query(`INSERT INTO users (name, password) 
+    VALUES ('${req.body.name}', '${encryptedPass}')`)
     .then(function (response) {
       console.log(response);
       res.send('success');
@@ -115,13 +118,13 @@ app.post('/sign-up', function (req, res) {
   }
 });
 
-app.get('/dashboard', authenticatedMiddleware, function (req, res) {
-  res.send('Secret Info for: ' + req.session.user.username);
-});
+// app.get('/dashboard', authenticatedMiddleware, function (req, res) {
+//   res.send('Secret Info for: ' + req.session.user.username);
+// });
 
-app.get('/financials', authenticatedMiddleware, authorizedFinancialMiddleware, function (req, res) {
-  res.send('This comany has 1 million dollarz');
-});
+// app.get('/financials', authenticatedMiddleware, authorizedFinancialMiddleware, function (req, res) {
+//   res.send('This comany has 1 million dollarz');
+// });
 
 app.listen(portNumber, function() {
   console.log(`My API is listening on port ${portNumber}.... `);
