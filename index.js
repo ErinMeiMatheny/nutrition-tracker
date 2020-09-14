@@ -69,13 +69,26 @@ app.get('/api/users', function (req, res) {
 
 app.post('/api/users', function (req, res) {
     if (req.body.name != '' && typeof req.body.name !== 'undefined') {
-        db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${req.body.email}','${req.body.password}') RETURNING *`)
+
+        let email = req.body.email
+
+        db.query(`SELECT * FROM users WHERE email = '${email}'`)
+        .then(function (results) {
+        if (!results[0]) {
+        db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${req.body.password}') RETURNING *`)
             .then(function (result) {
                 console.log(result);
                 res.send('OK');
 
-            });
-    } else {
+            })} else {
+                console.log('this email is in use')
+            }
+        
+        }
+
+        );
+    
+        } else {
         res.send('user needs a name');
     }
 });
