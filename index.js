@@ -69,7 +69,7 @@ app.get('/api/users', function (req, res) {
 
 app.post('/api/users', function (req, res) {
     if (req.body.name != '' && typeof req.body.name !== 'undefined') {
-        db.query(`INSERT INTO users (name,age,height_in,weight_lbs,gender) VALUES ('${req.body.name}','${req.body.age}','${req.body.height_in}','${req.body.weight_lbs}','${req.body.gender}') RETURNING *`)
+        db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${req.body.email}','${req.body.password}') RETURNING *`)
             .then(function (result) {
                 console.log(result);
                 res.send('OK');
