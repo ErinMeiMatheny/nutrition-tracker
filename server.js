@@ -97,6 +97,16 @@ function authorizedFinancialMiddleware(req, res, next) {
   }
 }
 
+//userId check
+
+// app.use((req,res,next) => {
+//   const { userId } = req.session
+  
+//   if (userId) {
+//     res.locals.user = 
+//   }
+// })
+
 //LANDING PAGE
 app.get('/', function (req, res) {
   console.log(req.session)
@@ -107,6 +117,7 @@ app.get('/', function (req, res) {
 
 //USER PAGE AFTER LOGIN AUTHENTICATED
 app.get('/user', redirectLogin, function (req, res) {
+  console.log(req.sessionID)
   res.render('user.ejs');
 });
 
@@ -126,11 +137,11 @@ app.post('/login', redirectHome, function (req, res) {
       password = '${encryptedPass}'`
       ).then(function (response) {
         console.log(response);
-        
+       
         req.session.user = response;
-
-        res.render('user.ejs')
-        console.log(req.session)
+        
+        return res.render('user.ejs')
+        
       }).catch(function (error) {
         console.log(error);
         res.send('error');
@@ -151,17 +162,21 @@ app.post('/register', redirectHome, function (req, res) {
 
   if( req.body.name && req.body.password && req.body.email) {
 
+    if (req.body.email == db.query(`SELECT * FROM users WHERE email = '${req.body.email}'`)){
+      alert('this username is already taken')
+    }
     let encryptedPass = encryptPassword(req.body.password);
     db.query(`INSERT INTO users (name, email, password) 
     VALUES ('${req.body.name}', '${req.body.email}','${encryptedPass}')`)
     .then(function (response) {
       console.log(response);
       
+      
       res.render('login.ejs')
 
     }).catch(function (error){
       console.log(error);
-      res.send('error');
+      // res.send('error');
     })
 
   } else {
@@ -179,6 +194,15 @@ app.post('/register', redirectHome, function (req, res) {
 
 //LOGS USER OUT
 app.post('/logout',redirectLogin, function (req,res) {
+  req.session.destroy(error => {
+    if (error) {
+      return res.render('/user')
+      console.log(error)
+    }
+
+    res.clearCookie(SESSION_NAME)
+    res.render('/')
+  })
   console.log("You are now logged out of your session")
 })
 
