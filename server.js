@@ -26,7 +26,7 @@ const pgp = require('pg-promise')(initOptions);
 const db = pgp(config);
 
 //Calls ejs template and allows web folder to hold all javascript/image files
-app.set('view-engine', 'ejs')
+// app.set('view-engine', 'ejs')
 app.use(express.static(__dirname + '/web'));
 
 app.use(express.urlencoded({ extended: false }));
@@ -76,7 +76,7 @@ function redirectLogin(req, res, next) {
     next();
   } else { // user is not authenticated send them to login
     console.log('user not authenticated');
-    res.render('index.ejs');
+    res.render('/');
   }
 }
 
@@ -112,18 +112,18 @@ app.get('/', function (req, res) {
   console.log(req.session)
   const { userId } = req.session 
 
-  res.render('index.ejs');
+  res.render('/web/index.html');
 });
 
 //USER PAGE AFTER LOGIN AUTHENTICATED
 app.get('/user', redirectLogin, function (req, res) {
   console.log(req.sessionID)
-  res.render('user.ejs');
+  res.render('/web/user.html');
 });
 
 //LOGIN PAGE
 app.get('/login', redirectHome, function (req, res) {
-  res.render('login.ejs')
+  res.render('/web/login.html')
 });
 
 //POST YOUR LOGIN CREDENTIALS 
@@ -140,7 +140,7 @@ app.post('/login', redirectHome, function (req, res) {
        
         req.session.user = response;
         
-        return res.render('user.ejs')
+        return res.render('/web/user.html')
         
       }).catch(function (error) {
         console.log(error);
@@ -154,7 +154,7 @@ app.post('/login', redirectHome, function (req, res) {
 
 //REGISTER PAGE
 app.get('/register', redirectHome, function (req, res) {
-  res.render('register.ejs');
+  res.render('/register.html');
 });
 
 //REGISTER YOUR INFO TO OUR WEBSITE / DATABASE ROUTE
@@ -172,7 +172,7 @@ app.post('/register', redirectHome, function (req, res) {
       console.log(response);
       
       
-      res.render('login.ejs')
+      res.render('/web/login.html')
 
     }).catch(function (error){
       console.log(error);
