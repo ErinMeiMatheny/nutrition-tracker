@@ -19,7 +19,7 @@ alert('Please Enter Required Info')
 } else{
   console.log(name,email,password)
 
-axios.post(`/api/users`, {"name": `${name}`,"email": `${email}`,"password": `${password}`},function(response){
+axios.post(`/register`, {"name": `${name}`,"email": `${email}`,"password": `${password}`},function(response){
   console.log(response)
 })
 }
