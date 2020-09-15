@@ -17,7 +17,7 @@
       <!-- Fontawesome 5.11.2 -->
       <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
-      <link rel="stylesheet" href="user.css">
+      <link rel="stylesheet" href="users.css">
       <link rel="stylesheet" href="style.css">
       <script src="./js/script.js"></script>
       <script src="app.js"></script>
@@ -58,7 +58,7 @@
             ----->
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">logout</a>
+          <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">logout</a>
         </li>
       </ul>
 
@@ -91,7 +91,7 @@
   <br>
   
   <!----------form -------------------------------------->
-  <div class="container">
+  <div class="container form">
     
       <div class="d-flex justify-content-center">
         <form class="form-inline my-2 my-lg-0">
@@ -114,7 +114,10 @@
       
         <div class="container">
           <div class="row">
-            <div class="form-group col-6">
+            <div class="col-2">
+
+            </div>
+            <div class="form-group col-3">
               <input class="form-control form-control-lg col-sm-8" type="text" placeholder="name">
               <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Gender">
               <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Height">
@@ -130,9 +133,71 @@
   
         </div>
     
-    
+  <!-----cards---------->  
   </div>
-    
+  <div class="card-deck p-5">
+    <div class="card">
+        <img class="card-img-top" src="/fullstack-project/nutrition-tracker/web/images/healthy-protein.jpg"  alt="">
+        <div class="card-body">
+            <h6 class="card-title">Protein</h6>
+            <p class="card-text">
+              Protein is a macronutrient that is essential to building muscle mass. 
+              It is commonly found in animal products, though is also present in other sources, such as nuts and legumes. 
+              There are three macronutrients: protein, fats and carbohydrates. Macronutrients provide calories, or energy.
+            </p>
+            <hr>
+            <div class="text-center">
+               
+                <h4>4 calories per gram</h4>
+                <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img class="card-img-top img-fluid height:auto" src="/fullstack-project/nutrition-tracker/web/images/healthy-carbs.jpg" height= "100" alt="">
+        <div class="card-body">
+            <h6 class="card-title">Carbs</h6>
+            <p class="card-text">
+              Carbohydrates are the sugars, starches and fibers found in fruits, grains, vegetables and milk products.
+               Though often maligned in trendy diets, carbohydrates — one of the basic food groups — are important to a healthy diet.
+            </p>
+            <hr>
+            <div class="text-center">
+                
+                <h4>4 calories per gram</h4>
+                <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img class="card-img-top" src="/fullstack-project/nutrition-tracker/web/images/Healthy-fats.jpg"  alt="">
+        <div class="card-body">
+            <h6 class="card-title">Fats</h6>
+            <p class="card-text">
+              The primary function of fat is as an energy reserve. The body stores fat, or adipose tissue, as a result of excess calorie consumption. 
+              During exercise, the body first uses calories from carbohydrates for energy. After about 20 minutes, it uses calories from stored fat to keep going.
+              Fats also help the body absorb necessary fat-soluble vitamins (vitamins A, D, E and K),
+            </p>
+            <hr>
+            <div class="text-center">
+                
+                <h4>9 calories per gram</h4>
+              <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+
+       
   
   <!---Diets Ideas-->
 
@@ -156,7 +221,7 @@
           </div>
 
           <div class="col-lg-6 p-5 my-auto">    
-                <div>
+                <div id="images-of-diet">
                    <img src="https://www.mymetabolicmeals.com/wp-content/uploads/2018/04/What-is-Carb-Cycling-blog-c.jpg" class="d-block w-100" alt="keto Dieting">
                 </div>            
           </div>
@@ -195,7 +260,7 @@
           </div>
           
           <div class="col-lg-6 p-5 my-auto">    
-                <div>
+                <div class="img-circular">
                    <img src="https://st1.thehealthsite.com/wp-content/uploads/2019/07/intermittent-diet-plan.jpg?impolicy=Medium_Resize&w=1200&h=800" class="d-block w-100" alt="keto Dieting">
                 </div>            
           </div>

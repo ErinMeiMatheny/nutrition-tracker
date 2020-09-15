@@ -5,6 +5,9 @@ const portNumber = process.env.PORT || 3000;
 const session = require('express-session');
 const pbkdf2 = require('pbkdf2');
 
+// const webRoutes = ('/api/webRoutes')
+// const router = express.Router()
+
 // pg-promise initialization options:
 const initOptions = {
   // Use a custom promise library, instead of the default ES6 Promise:
@@ -75,8 +78,8 @@ function redirectLogin(req, res, next) {
   if (req.session.user) {
     next();
   } else { // user is not authenticated send them to login
-    console.log('user not authenticated');
-    res.render('/');
+    console.log('USER NOT ATHENTICATED. PLEASE LOGIN OR REGISTER FIRST!');
+    res.redirect('/');
   }
 }
 
@@ -193,18 +196,44 @@ app.post('/register', redirectHome, function (req, res) {
 // });
 
 //LOGS USER OUT
-app.post('/logout',redirectLogin, function (req,res) {
-  req.session.destroy(error => {
-    if (error) {
-      return res.render('/user')
-      console.log(error)
-    }
+// app.get('/logout',redirectLogin, function (req,res, next) {
+//   req.session.destroy(error => {
+//     if (error) {
+//       return res.redirect('/user')
+//       console.log(error)
+//     }
 
-    res.clearCookie(SESSION_NAME)
-    res.render('/')
-  })
-  console.log("You are now logged out of your session")
-})
+//     res.clearCookie(SESSION_NAME)
+//     res.render('/')
+//   })
+//   console.log("You are now logged out of your session")
+// })
+
+//LOGS USER OUT
+  // app.get('/logout', redirectLogin, function (req, res, next) {
+  //   if (req.sessoin){
+  //     req.session.destroy(function(error) {
+  //       if(error) {
+  //         return next(error);
+  //       } else {
+  //         return res.redirect('/');
+  //       }
+  //     })
+  //   }
+  // });
+
+app.get('/logout',(req,res) => {
+  req.session.destroy((err) => {
+      if(err) {
+          return console.log(err);
+      }
+      res.redirect('/');
+  });
+
+});
+
+
+// router.use('/webRoutes', webRoutes)
 
 //APP PORT LISTEN
 app.listen(portNumber, function() {
