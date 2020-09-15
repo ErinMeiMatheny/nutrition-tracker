@@ -5,7 +5,7 @@ const portNumber = process.env.PORT || 3000;
 const session = require('express-session');
 const pbkdf2 = require('pbkdf2');
 
-// const webRoutes = ('/api/webRoutes')
+// const webRoutes = require ('./api/webRoutes')
 // const router = express.Router()
 
 // pg-promise initialization options:

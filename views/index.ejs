@@ -1,48 +1,51 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Nutrition App</title>
 
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Nutrition App</title>
 
-    <!-- Bootstrap 4.4.1 -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <!-- Fontawesome 5.11.2 -->
-    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+  <!-- Bootstrap 4.4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="style.css">
-    
-    <script src="./js/script.js"></script>
-    
-    </head>
+  <!-- Fontawesome 5.11.2 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
 
-    <body>
+  <link rel="stylesheet" href="style.css">
 
-        <header>
-            <nav class="navbar navbar-expand-lg navbar bg  sticky-top ">
-                <a class="navbar-brand" href="#">
-                  <img  src="/images/body-weighing-scale.jpg" width="30" height="30" class="d-inline-block align-top" alt="" loading="lazy">
-                  fitness
-                </a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                  <span class="navbar-toggler-icon"></span>
-                </button>
-              
-                <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                  <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                      <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link" href="/register">register</a>
-                    </li>
-                    <!-----------
+  
+
+</head>
+
+<body>
+
+  <header>
+    <nav class="navbar navbar-expand-lg navbar bg  sticky-top ">
+      <a class="navbar-brand" href="#">
+        <img src="/images/body-weighing-scale.jpg" width="30" height="30" class="d-inline-block align-top" alt=""
+          loading="lazy">
+        fitness
+      </a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="/login">login <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/register">register</a>
+          </li>
+          <!-----------
                     <li class="nav-item dropdown">
                       <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Dropdown
@@ -54,14 +57,14 @@
                         <a class="dropdown-item" href="#">Something else here</a>
                       </div>
                       ----->
-          
-                      
-                    </li>
-                    <li class="nav-item">
-                      <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">logout</a>
-                    </li>
-                  </ul>
-                  <!----------ERIN SEARCH BOX
+
+
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">logout</a>
+          </li>
+        </ul>
+        <!----------ERIN SEARCH BOX
           
                   <form class="form-inline my-2 my-lg-0">
                     <div class='row'>
@@ -72,167 +75,172 @@
           
                   </div>
                   ------->
-          
-          
-          
-                    <!---
+
+
+
+        <!---
                     <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                     --->
-                  </form>
-                </div>
-              </nav> 
-          <!----main content---->
-          <div class="view" style="background-image: url('./images/healthyfoods.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
-            <!-- Mask & flexbox options-->
-            <div class="mask  align-items-center">
-              <!-- Content -->
-              <div class="container">
-                <!--Grid row-->
-                <div class="row">
-                  <!--Grid column-->
-                  <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
-                    <h1 class="h1-responsive font-weight-bold mt-sm-5" style="color:rgb(241, 252, 244); font-family: 'Fredoka One';  text-shadow: 2px 2px rgb(5, 41, 8); font-size: 75px;font-weight: bolder; ">Find out the Macros for all you favorite foods!</h1>
-                    <hr class="hr-light">
-                    <!----
+        </form>
+      </div>
+    </nav>
+    <!----main content---->
+    <div class="view"
+      style="background-image: url('./images/healthyfoods.png'); background-repeat: no-repeat; background-size: cover; background-position: center center;">
+      <!-- Mask & flexbox options-->
+      <div class="mask  align-items-center">
+        <!-- Content -->
+        <div class="container">
+          <!--Grid row-->
+          <div class="row">
+            <!--Grid column-->
+            <div class="col-md-6 white-text text-center text-md-left mt-xl-5 mb-5 wow fadeInLeft" data-wow-delay="0.3s">
+              <h1 class="h1-responsive font-weight-bold mt-sm-5"
+                style="color:rgb(241, 252, 244); font-family: 'Fredoka One';  text-shadow: 2px 2px rgb(5, 41, 8); font-size: 75px;font-weight: bolder; ">
+                Find out the Macros for all you favorite foods!</h1>
+              <hr class="hr-light">
+              <!----
                     <h4 class="mb-4 " style="color:  rgb(246, 241, 247);text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;">A healthy diet plan consists of a balance of all three macros, so it ensures that you consume enough carbs, protein, and fat while fueling your body with the right amount of energy. </h4>
                     --->
-                  </div>
+            </div>
 
-                  <!---formm-->
-                  <div class="col-md-6 col-xl-5 mb-4">
-                      <div class="form-container">
-                        <div class="card wow ">
-                            <div class="card-body">
-                              <!--Header-->
-                              <div class="text-center">
-                                <h3 class="white-text">
-                                  <i class="fas fa-user white-text"></i> Register:</h3>
-                                <hr class="hr-light">
-                              </div>
-                              <!--Body-->
-                              <div class="md-form">
-                                <i class="fas fa-user prefix white-text active"></i>
-                                <input type="text" id="form3" class="white-text form-control">
-                                <label for="form3" class="active">Your name</label>
-                              </div>
-                              <div class="md-form">
-                                <i class="fas fa-envelope prefix white-text active"></i>
-                                <input type="email" id="form2" class="white-text form-control">
-                                <label for="form2" class="active">Your email</label>
-                              </div>
-                              <div class="md-form">
-                                <i class="fas fa-lock prefix white-text active"></i>
-                                <input type="password" id="form4" class="white-text form-control">
-                                <label for="form4">Your password</label>
-                              </div>
-                              <div class="text-center mt-4">
-                                <a  class="btn btn-outline-success">login</a>
-                                <a class="btn btn-outline-warning">register</a>
-                                <hr class="hr-light mb-3 mt-4">
-                                <div class="inline-ul text-center">
-                                  <a class="p-2 m-2 tw-ic">
-                                    <i class="fab fa-twitter white-text"></i>
-                                  </a>
-                                  <a class="p-2 m-2 li-ic">
-                                    <i class="fab fa-linkedin-in white-text"> </i>
-                                  </a>
-                                  <a class="p-2 m-2 ins-ic">
-                                    <i class="fas fa-instagram white-text"> </i>
-                                  </a>
-                                </div>
-                              </div>
-                            </div>
-
+            <!---formm-->
+            <div class="col-md-6 col-xl-5 mb-4">
+              <div class="form-container">
+                <div class="card wow ">
+                  <div class="card-body">
+                    <!--Header-->
+                    <div class="text-center">
+                      <h3 class="white-text">
+                        <i class="fas fa-user white-text"></i> Register:</h3>
+                      <hr class="hr-light">
+                    </div>
+                    <!--Body-->
+                    <div class="md-form">
+                      <i class="fas fa-user prefix white-text active"></i>
+                      <input type="text" id="name" class="white-text form-control">
+                      <label for="form3" class="active">Your name</label>
+                    </div>
+                    <div class="md-form">
+                      <i class="fas fa-envelope prefix white-text active"></i>
+                      <input type="email" id="email" class="white-text form-control">
+                      <label for="form2" class="active">Your email</label>
+                    </div>
+                    <div class="md-form">
+                      <i class="fas fa-lock prefix white-text active"></i>
+                      <input type="password" id="password" class="white-text form-control">
+                      <label for="form4">Your password</label>
+                    </div>
+                    <div class="text-center mt-4">
+                      <a class="btn btn-outline-success">login</a>
+                      <button id ="registerButton" class="btn btn-outline-warning">register</button>
+                      <hr class="hr-light mb-3 mt-4">
+                      <div class="inline-ul text-center">
+                        <a class="p-2 m-2 tw-ic">
+                          <i class="fab fa-twitter white-text"></i>
+                        </a>
+                        <a class="p-2 m-2 li-ic">
+                          <i class="fab fa-linkedin-in white-text"> </i>
+                        </a>
+                        <a class="p-2 m-2 ins-ic">
+                          <i class="fas fa-instagram white-text"> </i>
+                        </a>
                       </div>
+                    </div>
                   </div>
-                    <!--/.Form-->
-                  </div>
-         
-        </header>
 
-        <!-----------------------------footer------------------------------------------>
-      <footer class="container-fluid bg-dark p-2">
-        <div class="row">
-            <div class="col-sm-3">
-                <h6 class="text-secondary">Home</h6>
-                <hr>
-                <h6 class="text-secondary">example</h6>
-                <p>
-            
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
+                </div>
+              </div>
+              <!--/.Form-->
             </div>
-    
-            <div class="col-sm-3">
-                <h6 class="text-secondary">Blank#2</h6>
-                <hr>
-                <h6 class="text-secondary">example</h6>
-                <p>
-                  
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
-    
-            </div>
-    
-            <div class="col-sm-3">
-                <h6 class="text-secondary">Blank#3</h6>
-                <hr>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                  
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
-    
-                <h6 class="text-secondary">example</h6>
-                <p>
-                    
-                </p>
-            </div>
-    
-            <div class="col-sm-3" id="contactAnchor">
-                <h6 class="text-secondary">Contact</h6>
-                <hr>
-                <p>
-                    <i class="fas fa-envelope"></i> Fitness.com
-                </p>
-                <p>
-                    <i class="fas fa-camera"></i> instagram 
-                    <br><i class="fab fa-facebook-square"></i> facebook 
-                    <br><i class="fab fa-twitter-square"></i> twitter 
-                    <br><i class="fab fa-google-plus-square"></i> google+ 
-                </p>
-            </div>
-    
-        </div>
-    
-        <p class="text-center">Fitness &copy; 2020</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-       
 
-    </body>
+  </header>
+
+  <!-----------------------------footer------------------------------------------>
+  <footer class="container-fluid bg-dark p-2">
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Home</h6>
+        <hr>
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+      </div>
+
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Blank#2</h6>
+        <hr>
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+      </div>
+
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Blank#3</h6>
+        <hr>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+
+        <h6 class="text-secondary">example</h6>
+        <p>
+
+        </p>
+      </div>
+
+      <div class="col-sm-3" id="contactAnchor">
+        <h6 class="text-secondary">Contact</h6>
+        <hr>
+        <p>
+          <i class="fas fa-envelope"></i> Fitness.com
+        </p>
+        <p>
+          <i class="fas fa-camera"></i> instagram
+          <br><i class="fab fa-facebook-square"></i> facebook
+          <br><i class="fab fa-twitter-square"></i> twitter
+          <br><i class="fab fa-google-plus-square"></i> google+
+        </p>
+      </div>
+
+    </div>
+
+    <p class="text-center">Fitness &copy; 2020</p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="app.js"></script>
+
+
+</body>
+
 </html>
