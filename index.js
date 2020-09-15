@@ -73,22 +73,23 @@ app.post('/api/users', function (req, res) {
         let email = req.body.email
 
         db.query(`SELECT * FROM users WHERE email = '${email}'`)
-        .then(function (results) {
-        if (!results[0]) {
-        db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${req.body.password}') RETURNING *`)
-            .then(function (result) {
-                console.log(result);
-                res.send('OK');
+            .then(function (results) {
+                if (!results[0]) {
+                    db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${req.body.password}') RETURNING *`)
+                        .then(function (result) {
+                            console.log(result);
+                            res.send('OK');
 
-            })} else {
-                console.log('this email is in use')
+                        })
+                } else {
+                    console.log('this email is in use')
+                }
+
             }
-        
-        }
 
-        );
-    
-        } else {
+            );
+
+    } else {
         res.send('user needs a name');
     }
 });
