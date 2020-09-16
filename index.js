@@ -198,7 +198,7 @@ app.get('/intake', function (req, res) {
 });
 
 app.post('/intake', function (req, res) {
-  console.log('look here', req.session.user.id)
+  // console.log('look here', req.session.user.id)
   db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber,user_id,is_deleted)
     VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','${req.session.user.id}','FALSE') RETURNING *`)
     .then(function (result) {
@@ -208,7 +208,24 @@ app.post('/intake', function (req, res) {
 
 });
 
+//update user data
 
+app.put('/userdata', function (req, res) {
+  console.log(req.session.user.id)
+  db.query(`UPDATE users
+  SET age = '${req.body.age}',
+  height_in = '${req.body.height_in}',
+  weight_lbs = '${req.body.weight_lbs}',
+  gender = '${req.body.gender}'
+  
+  WHERE id = '${req.session.user.id}'`)
+    .then(function (results) {
+      console.log(req.session)
+      res.send('something')
+    }
+    )
+
+})
 
 // app.get('/dashboard', authenticatedMiddleware, function (req, res) {
 //   res.send('Secret Info for: ' + req.session.user.username);

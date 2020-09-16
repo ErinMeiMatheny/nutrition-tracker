@@ -74,3 +74,36 @@ searchButton.addEventListener('click', function () {
             console.log('error')
         })
 })
+
+let updateButton = document.getElementById('updateButton')
+
+
+updateButton.addEventListener('click', function () {
+
+    let age = document.getElementById('age').value
+    let height_in = document.getElementById('height_in').value
+    let weight_lbs = document.getElementById('weight_lbs').value
+    let gender = document.getElementById('gender').value
+
+    age = parseInt(age)
+    height_in = parseInt(height_in)
+    weight_lbs = parseInt(weight_lbs)
+
+
+    axios.put(`/userdata`, { "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
+        .then((data) => {
+            console.log(data)
+            console.log(age, height_in, weight_lbs, gender)
+
+            document.getElementById('age').value = ''
+            document.getElementById('height_in').value = ''
+            document.getElementById('weight_lbs').value = ''
+            document.getElementById('gender').value = ''
+
+
+        })
+        .catch((error) => {
+            console.log("somethin here ain't right")
+        })
+
+})
