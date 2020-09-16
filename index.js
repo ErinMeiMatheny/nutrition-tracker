@@ -122,7 +122,7 @@ app.get('/', function (req, res) {
   
   //POST YOUR LOGIN CREDENTIALS 
   app.post('/login', redirectHome, function (req, res) {
-    if( req.body.email && req.body.password ) {
+    if( req.body.email !='' &&  req.body.password !='' ) {
       console.log(req.body);
       let encryptedPass = encryptPassword(req.body.password);
       db.one(
@@ -134,7 +134,7 @@ app.get('/', function (req, res) {
          
           req.session.user = response;
           
-          return res.render('user.ejs')
+          return res.render('users.ejs')
           
         }).catch(function (error) {
           console.log(error);
@@ -163,7 +163,7 @@ app.get('/', function (req, res) {
             if (!results[0]) {
                 let encryptedPass = encryptPassword(req.body.password);
 
-                db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${req.body.password}') RETURNING *`)
+                db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${encryptedPass}') RETURNING *`)
                     .then(function (result) {
                         console.log(result);
                         res.render('login.ejs');
