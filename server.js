@@ -5,6 +5,8 @@ const portNumber = process.env.PORT || 3000;
 const session = require('express-session');
 const pbkdf2 = require('pbkdf2');
 
+
+
 // const webRoutes = require ('./api/webRoutes')
 // const router = express.Router()
 
@@ -121,6 +123,7 @@ app.get('/', function (req, res) {
 //USER PAGE AFTER LOGIN AUTHENTICATED
 app.get('/user', redirectLogin, function (req, res) {
   console.log(req.sessionID)
+  let user = req.body.user
   res.render('user.ejs');
 });
 
