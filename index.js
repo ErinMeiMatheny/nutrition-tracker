@@ -87,7 +87,7 @@ function redirectLogin(req, res, next) {
 // redirects if user id is already authenticated
 function redirectHome(req, res, next) {
   if (req.session.user) {
-    res.render('/users')
+    res.redirect('/users')
   } else {
     next()
   }
@@ -110,9 +110,10 @@ app.get('/', function (req, res) {
   });
   
   //USER PAGE AFTER LOGIN AUTHENTICATED
-  app.get('/user', redirectLogin, function (req, res) {
+  app.get('/users', redirectLogin, function (req, res) {
     console.log(req.sessionID)
-    res.render('user.ejs');
+    console.log('you are on/users page')
+    res.render('users.ejs');
   });
   
   //LOGIN PAGE
@@ -181,7 +182,31 @@ app.get('/', function (req, res) {
     res.send('user needs a name');
 }
 });
-      
+  
+//post food
+app.get('/intake', function (req, res) {
+  db.query('SELECT * FROM intake')
+      .then(function (results) {
+        results.forEach(function (intake) {
+          console.log(intake.food);
+        });
+
+        res.json(results);
+      });
+});
+
+app.post('/intake', function (req, res) {
+  console.log('look here', req.session.user.id)
+    db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber,user_id,is_deleted)
+    VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','${req.session.user.id}','FALSE') RETURNING *`)
+    .then(function (result) {
+      console.log(result);
+    });
+    res.send('OK');
+  
+});
+
+
   
   // app.get('/dashboard', authenticatedMiddleware, function (req, res) {
   //   res.send('Secret Info for: ' + req.session.user.username);
