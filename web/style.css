@@ -57,3 +57,16 @@ h6 {
       padding-top: 30px;
       opacity: .75;
   }
+
+
+  /* this portion is for the user page */
+
+  #userNameEJSHomepage {
+    display: flex;
+    justify-content: center;
+    color: rgb(38, 20, 20);
+    font-size: 3em;
+    padding-top: 5%;
+    padding-bottom: 5%;
+    
+  }
