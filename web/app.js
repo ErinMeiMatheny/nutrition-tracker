@@ -19,8 +19,9 @@ alert('Please Enter Required Info')
 } else{
   console.log(name,email,password)
 
-axios.post(`/register`, {"name": `${name}`,"email": `${email}`,"password": `${password}`},function(response){
+axios.post(`/register`, {"name": `${name}`,"email": `${email}`,"password": `${password}`}).then(function(response){
   console.log(response)
+  window.location.href='/login'
 })
 }
 
