@@ -1,0 +1,61 @@
+
+
+.user-page-body {
+    background-image:url(https://d39l2hkdp2esp1.cloudfront.net/img/photo/167882/167882_00_2x.jpg);
+     /* Full height */
+  height: 100%;
+
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+  
+};
+
+.search {
+    display: flex;
+    justify-content: center;
+    padding-top: 10px;
+  }
+
+
+  
+
+  footer {
+      background-color: gray;
+  }
+
+  .macros{
+      color:black;
+  }
+  
+  .carb-cycling  {
+    font-family: 'Indie Flower'; 
+  }
+
+  .intermitten-fasting h4{
+    font-family: 'Indie Flower';
+      
+  }
+
+  .Keto {
+    font-family: 'Indie Flower';
+  }
+
+  hr {
+      border-color:rgb(30, 190, 9);
+  }
+
+  .dieting {
+      font-size: 100px;
+      font-weight: lighter;
+      
+      color: rgb(240, 225, 14);
+      font-family: 'Indie Flower';
+  }
+
+ .card-body{
+     background-color: whitesmoke;
+ }
+
+ 
