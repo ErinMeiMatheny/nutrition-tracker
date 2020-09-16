@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+  <html lang="en">
+
+    <head>
+      <meta charset="UTF-8">
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+      <meta http-equiv="X-UA-Compatible" content="ie=edge">
+      <title>Welcome User</title>
+
+      <!-- JQuery -->
+      <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+      <!-- Bootstrap 4.4.1 -->
+      <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+      <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+
+      <!-- Fontawesome 5.11.2 -->
+      <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css">
+
+      <link rel="stylesheet" href="users.css">
+      <link rel="stylesheet" href="style.css">
+    </head>
+<!------------------------------HEAD-------------------------------->
+
+<body class="user-page-body">
+  <nav class="navbar navbar-expand-lg navbar-transparent bg- sticky-top ">
+    <a class="navbar-brand" href="#">
+      <img src="/images/body-weighing-scale.jpg" width="30" height="30"
+        class="d-inline-block align-top" alt="" loading="lazy">
+      fitness
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="#">login <span class="sr-only">(current)</span></a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="#">register</a>
+        </li>
+        <!-----------
+          <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Dropdown
+            </a> 
+            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+              <a class="dropdown-item" href="#">Action</a>
+              <a class="dropdown-item" href="#">Another action</a>
+              <div class="dropdown-divider"></div>
+              <a class="dropdown-item" href="#">Something else here</a>
+            </div>
+            ----->
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout" tabindex="-1" aria-disabled="true">logout</a>
+        </li>
+      </ul>
+
+    </div>
+  </nav>
+  <!-- Navigation -->
+
+  <div class="modal" tabindex="-1">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title">Modal title</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <p>Modal body text goes here.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+          <button type="button" class="btn btn-primary">Save changes</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <br>
+  <br>
+  <br>
+  <br>
+  
+  <!----------form -------------------------------------->
+  <div class="container form">
+    
+      <div class="d-flex justify-content-center">
+        <form class="form-inline my-2 my-lg-0">
+          <br>
+          <div class='row'>
+            <button id='searchButton' type="button" class="btn btn-outline-success">Search Food</button>
+            <input id="search" type="search" placeholder="Enter food" aria-label="Search">
+           
+          </div>
+          <div id='results'>
+  
+          </div>
+          <!---
+          <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+          <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+          --->
+        </form>
+      </div>
+      <br>
+      
+        <div class="container">
+          <div class="row">
+            <div class="col-2">
+
+            </div>
+            <div class="form-group col-3">
+              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="name">
+              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Gender">
+              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Height">
+              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Weight">
+  
+            </div>
+  
+            <div class="form-group col-6">
+              <label for="exampleFormControlTextarea1"></label>
+              <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" placeholder="Your Results.."></textarea>
+            </div>
+          </div>
+  
+        </div>
+    
+  <!-----cards---------->  
+  </div>
+  <div class="card-deck p-5">
+    <div class="card">
+        <img class="card-img-top" src="/images/healthy-protein.jpg"  alt="">
+        <div class="card-body">
+            <h6 class="card-title">Protein</h6>
+            <p class="card-text">
+              Protein is a macronutrient that is essential to building muscle mass. 
+              It is commonly found in animal products, though is also present in other sources, such as nuts and legumes. 
+              There are three macronutrients: protein, fats and carbohydrates. Macronutrients provide calories, or energy.
+            </p>
+            <hr>
+            <div class="text-center">
+               
+                <h4>4 calories per gram</h4>
+                <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img class="card-img-top img-fluid height:auto" src="/images/healthy-carbs.jpg" height= "100" alt="">
+        <div class="card-body">
+            <h6 class="card-title">Carbs</h6>
+            <p class="card-text">
+              Carbohydrates are the sugars, starches and fibers found in fruits, grains, vegetables and milk products.
+               Though often maligned in trendy diets, carbohydrates — one of the basic food groups — are important to a healthy diet.
+            </p>
+            <hr>
+            <div class="text-center">
+                
+                <h4>4 calories per gram</h4>
+                <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+               
+            </div>
+        </div>
+    </div>
+
+    <div class="card">
+        <img class="card-img-top" src="/images/healthy-fats.jpg"  alt="">
+        <div class="card-body">
+            <h6 class="card-title">Fats</h6>
+            <p class="card-text">
+              The primary function of fat is as an energy reserve. The body stores fat, or adipose tissue, as a result of excess calorie consumption. 
+              During exercise, the body first uses calories from carbohydrates for energy. After about 20 minutes, it uses calories from stored fat to keep going.
+              Fats also help the body absorb necessary fat-soluble vitamins (vitamins A, D, E and K),
+            </p>
+            <hr>
+            <div class="text-center">
+                
+                <h4>9 calories per gram</h4>
+              <!--
+                  <p><a class="btn btn-outline-warning" href="#">enter</a></p>
+                -->
+            </div>
+        </div>
+    </div>
+</div>
+
+       
+  
+  <!---Diets Ideas-->
+
+  <h1 class="display-4 text-center dieting">Dieting</h1>
+            <p class="lead"></p>
+<hr>
+     <!----carb cycling------->
+
+    <div class="container is-fluid  has-text-centered carb-cycling pb-2">
+      <div class="row">
+          <div class="col-lg-6 p-2 my-auto">
+              <h1 class='text-green p-4'>Carb Cycling</h1>
+              <h4>What is Carb Cycling?
+                Carb cycling is a dietary approach in which you alternate carb intake on a daily, weekly or monthly basis.
+                
+                It is commonly used to lose fat, maintain physical performance while dieting, or overcome a weight loss plateau.
+                
+                Some people adjust their carb intake day-to-day, while others may do longer periods of low, moderate and high-carb diets.
+                
+                In short, carb cycling aims to time carbohydrate intake to when it provides maximum benefit and exclude carbs when they're not needed  </h4>
+          </div>
+
+          <div class="col-lg-6 p-5 my-auto">    
+                <div id="images-of-diet">
+                   <img src="https://www.mymetabolicmeals.com/wp-content/uploads/2018/04/What-is-Carb-Cycling-blog-c.jpg" class="d-block w-100" alt="keto Dieting">
+                </div>            
+          </div>
+      </div>                            
+    </div>
+    
+
+    <!---------Keto--------->
+    <div class="container is-fluid  has-text-centered Keto pb-2">
+      <div class="row">
+          <div class="col-lg-6 p-5 my-auto">
+              <h1 class='p-4'>Keto Dieting</h1>
+              <h4>A keto or ketogenic diet is a low-carb, moderate protein, higher-fat diet that can help you burn fat more effectively.
+                 It has many benefits for weight loss, health, and performance, as shown in over 50 studies. 
+                 That's why it's recommended by so many doctors.</h4>
+          </div>
+          
+          <div class="col-lg-6 p-5 my-auto">    
+                <div>
+                   <img src="https://692671.smushcdn.com/1445505/wp-content/uploads/2020/01/Keto-Diet.jpg?lossy=0&strip=1&webp=0" class="d-block w-100" alt="keto Dieting">
+                </div>            
+          </div>
+      </div>                            
+    </div>
+
+    
+
+    <!------intermitten fasting------>
+    <div class="container is-fluid  has-text-centered intermitten-fasting pb-1">
+      <div class="row">
+          <div class="col-lg-6 p-3 my-auto">
+              <h1 class='p-4'>Intermitten Fasting</h1>
+              <h4> Intermittent fasting (IF) is an eating pattern that cycles between periods of fasting and eating. 
+                It doesn't specify which foods you should eat but rather when you should eat them. 
+                In this respect, it's not a diet in the conventional sense but more accurately described as an eating pattern</h4>
+          </div>
+          
+          <div class="col-lg-6 p-5 my-auto">    
+                <div class="img-circular">
+                   <img src="https://st1.thehealthsite.com/wp-content/uploads/2019/07/intermittent-diet-plan.jpg?impolicy=Medium_Resize&w=1200&h=800" class="d-block w-100" alt="keto Dieting">
+                </div>            
+          </div>
+      </div>                            
+    </div>
+    
+
+    
+  <!-----------------------------footer------------------------------------------>
+<footer class="container-fluid bg-dark p-5">
+    <div class="row">
+        <div class="col-sm-3">
+            <h6 class="text-secondary">Home</h6>
+            <hr>
+            <h6 class="text-secondary">example</h6>
+            <p>
+              
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+        </div>
+
+        <div class="col-sm-3">
+            <h6 class="text-secondary">Blank#2</h6>
+            <hr>
+            <h6 class="text-secondary">example</h6>
+            <p>
+              
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+
+        </div>
+
+        <div class="col-sm-3">
+            <h6 class="text-secondary">Blank#3</h6>
+            <hr>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+              
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+
+            <h6 class="text-secondary">example</h6>
+            <p>
+                
+            </p>
+        </div>
+
+        <div class="col-sm-3" id="contactAnchor">
+            <h6 class="text-secondary">Contact</h6>
+            <hr>
+            <p>
+                <i class="fas fa-envelope"></i> Fitness.com
+            </p>
+            <p>
+                <i class="fas fa-camera"></i> instagram 
+                <br><i class="fab fa-facebook-square"></i> facebook 
+                <br><i class="fab fa-twitter-square"></i> twitter 
+                <br><i class="fab fa-google-plus-square"></i> google+ 
+            </p>
+        </div>
+
+    </div>
+
+    <p class="text-center">Fitness &copy; 2020</p>
+</footer>
+  
+<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+<script src = "users.js"></script>
+</body>
+
+
+</html>
