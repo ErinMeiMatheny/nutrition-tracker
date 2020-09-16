@@ -1,3 +1,19 @@
+
+axios.get('/userdata')
+    .then((data)=>{
+        console.log(data.data)
+        document.getElementById('userAge').innerHTML = `age: ${data.data[0].age}`
+        document.getElementById('userGender').innerHTML = `gender: ${data.data[0].gender}`
+        document.getElementById('userHeight').innerHTML = `height: ${data.data[0].height_in} in`
+        document.getElementById('userWeight').innerHTML = `weight: ${data.data[0].weight_lbs} lbs`
+    })
+    .catch((error)=>{
+        console.log("there's a snake in my boot")
+    })
+
+
+
+
 let searchButton = document.getElementById('searchButton')
 
 let nutrition = []
@@ -80,6 +96,7 @@ let updateButton = document.getElementById('updateButton')
 
 updateButton.addEventListener('click', function () {
 
+    let name = document.getElementById('name').value
     let age = document.getElementById('age').value
     let height_in = document.getElementById('height_in').value
     let weight_lbs = document.getElementById('weight_lbs').value
@@ -90,7 +107,7 @@ updateButton.addEventListener('click', function () {
     weight_lbs = parseInt(weight_lbs)
 
 
-    axios.put(`/userdata`, { "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
+    axios.put(`/userdata`, { "name": `${name}`,"age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
         .then((data) => {
             console.log(data)
             console.log(age, height_in, weight_lbs, gender)

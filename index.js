@@ -203,8 +203,8 @@ app.post('/intake', function (req, res) {
     VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','${req.session.user.id}','FALSE') RETURNING *`)
     .then(function (result) {
       console.log(result);
+      res.send('OK')
     });
-  res.send('OK');
 
 });
 
@@ -213,7 +213,8 @@ app.post('/intake', function (req, res) {
 app.put('/userdata', function (req, res) {
   console.log(req.session.user.id)
   db.query(`UPDATE users
-  SET age = '${req.body.age}',
+  SET name ='${req.body.name}',
+  age = '${req.body.age}',
   height_in = '${req.body.height_in}',
   weight_lbs = '${req.body.weight_lbs}',
   gender = '${req.body.gender}'
@@ -225,6 +226,16 @@ app.put('/userdata', function (req, res) {
     }
     )
 
+})
+
+// retrieve user data for user.ejs display
+app.get('/userdata', function (req, res) {
+  console.log("welcome", req.session.user.name)
+  db.query(`SELECT * FROM users WHERE id = '${req.session.user.id}'`)
+    .then(function (results) {
+      console.log('current', results)
+      res.send(results)
+    })
 })
 
 // app.get('/dashboard', authenticatedMiddleware, function (req, res) {

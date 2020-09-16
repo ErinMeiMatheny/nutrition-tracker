@@ -99,9 +99,9 @@
             <input id="search" type="search" placeholder="Enter food" aria-label="Search">
            
           </div>
-          <div id='results'>
+          <!-- <div id='results'>
   
-          </div>
+          </div> -->
           <!---
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -112,20 +112,23 @@
       
         <div class="container">
           <div class="row">
-            <div class="col-2">
 
-            </div>
             <div class="form-group col-3">
+              <input id = 'name' class="form-control form-control-lg col-sm-8" type="text" placeholder="name">
               <input id = 'age' class="form-control form-control-lg col-sm-8" type="number" placeholder="age">
               <input id = 'gender' class="form-control form-control-lg col-sm-8" type="text" placeholder="Gender">
               <input id = 'height_in' class="form-control form-control-lg col-sm-8" type="number" placeholder="Height">
               <input id = 'weight_lbs' class="form-control form-control-lg col-sm-8" type="number" placeholder="Weight">
-              <button id = 'updateButton'>Update your stats</button>
+              <button id = 'updateButton'>Update your info</button>
             </div>
-  
+              <div class=" col-3">
+              <div id = 'userAge' class="form-control form-control-lg col-sm-8">age</div>
+              <div id = 'userGender' class="form-control form-control-lg col-sm-8">gender</div>
+              <div id = 'userHeight' class="form-control form-control-lg col-sm-8">height inches</div>
+              <div id = 'userWeight' class="form-control form-control-lg col-sm-8">weight lbs</div>
+            </div>
             <div class="form-group col-6">
-              <label for="exampleFormControlTextarea1"></label>
-              <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" placeholder="Your Results.."></textarea>
+              <div id = 'results' placeholder="Your Results.."></div>
             </div>
           </div>
   
