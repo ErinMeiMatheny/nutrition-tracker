@@ -20,7 +20,7 @@ const config = {
   host: 'localhost',
   port: 5432,
   database: 'nutrition',
-  user: 'erin'
+  user: 'urias'
 };
 
 // Load and initialize pg-promise:
@@ -113,7 +113,14 @@ app.get('/', function (req, res) {
 app.get('/users', redirectLogin, function (req, res) {
   console.log(req.sessionID)
   console.log('you are on/users page')
-  res.render('users.ejs');
+
+  let sessionData = {
+    name: req.session.user.name
+  }
+
+  res.render('users.ejs', { name: `${sessionData.name}`});
+
+  res.status(200).send()
 });
 
 //LOGIN PAGE
@@ -122,7 +129,7 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 //POST YOUR LOGIN CREDENTIALS 
-app.post('/login', redirectHome, function (req, res) {
+app.post('/login', function (req, res) {
   if (req.body.email != '' && req.body.password != '') {
     console.log(req.body);
     let encryptedPass = encryptPassword(req.body.password);
@@ -135,7 +142,7 @@ app.post('/login', redirectHome, function (req, res) {
 
       req.session.user = response;
 
-      return res.render('users.ejs')
+      return res.redirect('/users')
 
     }).catch(function (error) {
       console.log(error);
