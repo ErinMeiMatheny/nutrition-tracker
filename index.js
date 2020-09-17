@@ -113,11 +113,13 @@ app.get('/', function (req, res) {
 app.get('/users', redirectLogin, function (req, res) {
   console.log(req.sessionID)
   console.log('you are on/users page')
-  
+
   let sessionData = {
     name: req.session.user.name
   }
+
   res.render('users.ejs', { name: `${sessionData.name}`});
+
   res.status(200).send()
 });
 
