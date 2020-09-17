@@ -12,6 +12,16 @@ axios.get('/userdata')
     })
 
 
+axios.get('/intake')
+    .then((data)=>{
+        for (i = 0; i < data.data.length; i++){
+        console.log(data.data[i])
+        }
+    })
+    .catch((error)=>{
+        console.log('error, cannot retrieve intake')
+    })
+
 
 
 let searchButton = document.getElementById('searchButton')
@@ -31,11 +41,13 @@ searchButton.addEventListener('click', function () {
         .then((data) => {
             let results = document.getElementById('results')
 
+            results.innerHTML = ''
+
             nutrition = data
 
             console.log(nutrition)
 
-            for (i = 0; i < data.data.hints.length; i++) {
+            for (i = 0; i < 5; i++) {
                 let resultsList = document.createElement('div')
 
                 resultsList.innerHTML = data.data.hints[i].food.label

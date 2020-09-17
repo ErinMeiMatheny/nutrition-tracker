@@ -187,7 +187,9 @@ app.post('/register', redirectHome, function (req, res) {
 
 //post food
 app.get('/intake', function (req, res) {
-  db.query('SELECT * FROM intake')
+  db.query(`SELECT * FROM intake
+  LEFT JOIN users
+  ON intake.user_id = users.id`)
     .then(function (results) {
       results.forEach(function (intake) {
         console.log(intake.food);
@@ -198,7 +200,7 @@ app.get('/intake', function (req, res) {
 });
 
 app.post('/intake', function (req, res) {
-  // console.log('look here', req.session.user.id)
+  console.log('look here', req.session.user.id)
   db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber,user_id,is_deleted)
     VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','${req.session.user.id}','FALSE') RETURNING *`)
     .then(function (result) {
