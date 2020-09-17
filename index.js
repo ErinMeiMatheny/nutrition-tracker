@@ -20,7 +20,7 @@ const config = {
   host: 'localhost',
   port: 5432,
   database: 'nutrition',
-  user: 'erin'
+  user: 'urias'
 };
 
 // Load and initialize pg-promise:
@@ -118,6 +118,7 @@ app.get('/users', redirectLogin, function (req, res) {
     name: req.session.user.name
   }
 
+  console.log(sessionData)
   res.render('users.ejs', { name: `${sessionData.name}`});
 
   res.status(200).send()
@@ -142,7 +143,7 @@ app.post('/login', redirectHome, function (req, res) {
 
       req.session.user = response;
 
-      return res.render('users.ejs')
+      return res.redirect('/users')
 
     }).catch(function (error) {
       console.log(error);
