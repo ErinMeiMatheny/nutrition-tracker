@@ -1,24 +1,24 @@
 
 axios.get('/userdata')
-    .then((data)=>{
+    .then((data) => {
         console.log(data.data)
         document.getElementById('userAge').innerHTML = `age: ${data.data[0].age}`
         document.getElementById('userGender').innerHTML = `gender: ${data.data[0].gender}`
         document.getElementById('userHeight').innerHTML = `height: ${data.data[0].height_in} in`
         document.getElementById('userWeight').innerHTML = `weight: ${data.data[0].weight_lbs} lbs`
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.log("there's a snake in my boot")
     })
 
 
 axios.get('/intake')
-    .then((data)=>{
-        for (i = 0; i < data.data.length; i++){
-        console.log(data.data[i])
+    .then((data) => {
+        for (i = 0; i < data.data.length; i++) {
+            console.log(data.data[i])
         }
     })
-    .catch((error)=>{
+    .catch((error) => {
         console.log('error, cannot retrieve intake')
     })
 
@@ -119,7 +119,7 @@ updateButton.addEventListener('click', function () {
     weight_lbs = parseInt(weight_lbs)
 
 
-    axios.put(`/userdata`, { "name": `${name}`,"age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
+    axios.put(`/userdata`, { "name": `${name}`, "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
         .then((data) => {
             console.log(data)
             console.log(age, height_in, weight_lbs, gender)
@@ -129,6 +129,10 @@ updateButton.addEventListener('click', function () {
             document.getElementById('weight_lbs').value = ''
             document.getElementById('gender').value = ''
 
+            document.getElementById('userAge').innerHTML = `age: ${age}`
+            document.getElementById('userGender').innerHTML = `gender: ${gender}`
+            document.getElementById('userHeight').innerHTML = `height: ${height_in} in`
+            document.getElementById('userWeight').innerHTML = `weight: ${weight_lbs} lbs`
 
         })
         .catch((error) => {
