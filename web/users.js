@@ -22,6 +22,14 @@ axios.get('/intake')
         console.log('error, cannot retrieve intake')
     })
 
+axios.get('/calories')
+    .then((data)=>{
+    
+        console.log("total calories are",data.data[0].sum)
+    })
+    .catch((error)=>{
+        console.log('cannot load calories')
+    })
 
 
 let searchButton = document.getElementById('searchButton')
@@ -45,7 +53,7 @@ searchButton.addEventListener('click', function () {
 
             nutrition = data
 
-            console.log(nutrition)
+            // console.log(nutrition)
 
             for (i = 0; i < 5; i++) {
                 let resultsList = document.createElement('div')

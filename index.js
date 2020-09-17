@@ -113,7 +113,7 @@ app.get('/', function (req, res) {
 app.get('/users', redirectLogin, function (req, res) {
   console.log(req.sessionID)
   console.log('you are on/users page')
-  
+
   let sessionData = {
     name: req.session.user.name
   }
@@ -140,7 +140,7 @@ app.post('/login', redirectHome, function (req, res) {
 
       req.session.user = response;
 
-      return res.render('users.ejs')
+      return res.redirect('/users')
 
     }).catch(function (error) {
       console.log(error);
@@ -203,6 +203,15 @@ app.get('/intake', function (req, res) {
       res.json(results);
     });
 });
+
+app.get('/calories', function(req,res){
+  db.query(`SELECT SUM(carb_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
 
 app.post('/intake', function (req, res) {
   console.log('look here', req.session.user.id)
