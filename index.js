@@ -205,7 +205,9 @@ app.post('/register', redirectHome, function (req, res) {
 app.get('/intake', function (req, res) {
   db.query(`SELECT * FROM intake
   LEFT JOIN users
-  ON intake.user_id = users.id`)
+  ON intake.user_id = users.id
+  WHERE is_deleted = FALSE
+  AND user_id = ${req.session.user.id}`)
     .then(function (results) {
       results.forEach(function (intake) {
         console.log(intake.food);
