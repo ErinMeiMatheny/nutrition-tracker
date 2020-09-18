@@ -3,6 +3,7 @@ let registerButton = document.getElementById('registerButton')
 
 
 
+
 registerButton.addEventListener('click', function () {
   console.log('button works')
 
@@ -30,6 +31,7 @@ registerButton.addEventListener('click', function () {
         window.location.href = '/login'
       })
   }
+
 
 })
 

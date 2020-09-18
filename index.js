@@ -12,16 +12,21 @@ const pbkdf2 = require('pbkdf2');
 // pg-promise initialization options:
 const initOptions = {
   // Use a custom promise library, instead of the default ES6 Promise:
+
   promiseLib: promise,
+
+
 };
 
 // Database connection parameters:
 const config = {
+
   host: 'lallah.db.elephantsql.com',
   port: 5432,
   database: 'bimpyezd',
   user: 'bimpyezd',
   password: 'oAbw-tCFognawMn-HuJdACfPrlK_apH8'
+
 };
 
 // Load and initialize pg-promise:
@@ -42,7 +47,9 @@ app.use(express.json());
 const {
   PORT = 3000,
   NODE_ENV = 'development',
+
   SESSION_NAME = 'sid',
+
   SESSION_SECRET = 'tacocat',
   SESSION_LIFETIME = 60000
 } = process.env
@@ -58,6 +65,7 @@ app.use(session({
   saveUninitialized: false,
   secret: SESSION_SECRET,
   cookie: {
+    
     maxAge: SESSION_LIFETIME,
     sameSite: true,
     secure: IN_PRODUCTION
@@ -88,7 +96,9 @@ function redirectLogin(req, res, next) {
 // redirects if user id is already authenticated
 function redirectHome(req, res, next) {
   if (req.session.user) {
+
     res.redirect('/users')
+
   } else {
     next()
   }
@@ -104,6 +114,7 @@ function authorizedFinancialMiddleware(req, res, next) {
 
 //LANDING PAGE
 app.get('/', function (req, res) {
+
   console.log(req.session)
   const { userId } = req.session
 

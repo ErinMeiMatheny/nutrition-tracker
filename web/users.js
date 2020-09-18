@@ -1,4 +1,5 @@
 
+
 axios.get('/userdata')
     .then((data) => {
         console.log(data.data)
@@ -54,11 +55,13 @@ axios.get('/calories')
         console.log('cannot load calories')
     })
 
+
 let searchButton = document.getElementById('searchButton')
 
 let nutrition = []
 
 searchButton.addEventListener('click', function () {
+
     let food = document.getElementById('search').value
 
     if (food === '') {
@@ -85,12 +88,14 @@ searchButton.addEventListener('click', function () {
 
                 let nutritionInfo = document.createElement('div')
                 nutritionInfo.innerHTML = `
+
             calories: ${data.data.hints[i].food.nutrients.ENERC_KCAL},
             carbs: ${data.data.hints[i].food.nutrients.CHOCDF}g,
             fat: ${data.data.hints[i].food.nutrients.FAT}g,
             protein: ${data.data.hints[i].food.nutrients.PROCNT}g,
             fiber: ${data.data.hints[i].food.nutrients.FIBTG}g
             `
+
 
                 results.appendChild(nutritionInfo)
 
@@ -170,3 +175,4 @@ updateButton.addEventListener('click', function () {
         })
 
 })
+
