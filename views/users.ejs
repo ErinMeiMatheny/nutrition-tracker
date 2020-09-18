@@ -87,45 +87,67 @@
   <br>
   <br>
   <br>
-  
+
+  <h1 id="userNameEJSHomepage">
+    Welcome <%=name%>, to our home page. 
+  </h1>
   <!----------form -------------------------------------->
   <div class="container form">
-    
+
+    <div class = 'row'>
+      <div id = 'calories' class = 'col-2'>Calories</div>  
+      <div id = 'carbs' class = 'col-2'>Carbs</div>    
+      <div id = 'fats' class = 'col-2'>Fats</div>    
+      <div id = 'protein' class = 'col-2'>Protein</div>    
+
+      
+    </div>
       <div class="d-flex justify-content-center">
-        <form class="form-inline my-2 my-lg-0">
+        <div class="form-inline my-2 my-lg-0">
           <br>
+          
+
           <div class='row'>
             <button id='searchButton' type="button" class="btn btn-outline-success">Search Food</button>
             <input id="search" type="search" placeholder="Enter food" aria-label="Search">
            
           </div>
-          <div id='results'>
+
+          <!-- <div id='results'>
   
-          </div>
+          </div> -->
+
           <!---
           <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
           <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
           --->
-        </form>
+
+          </div>
+
       </div>
       <br>
       
         <div class="container">
           <div class="row">
-            <div class="col-2">
 
-            </div>
+
             <div class="form-group col-3">
-              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="name">
-              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Gender">
-              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Height">
-              <input class="form-control form-control-lg col-sm-8" type="text" placeholder="Weight">
-  
+              <input id = 'name' class="form-control form-control-lg col-sm-8" type="text" placeholder="name">
+              <input id = 'age' class="form-control form-control-lg col-sm-8" type="number" placeholder="age">
+              <input id = 'gender' class="form-control form-control-lg col-sm-8" type="text" placeholder="Gender">
+              <input id = 'height_in' class="form-control form-control-lg col-sm-8" type="number" placeholder="Height">
+              <input id = 'weight_lbs' class="form-control form-control-lg col-sm-8" type="number" placeholder="Weight">
+              <button id = 'updateButton'>Update your info</button>
             </div>
-  
+              <div class=" col-3">
+              <div id = 'userAge' class="form-control form-control-lg col-sm-8">age</div>
+              <div id = 'userGender' class="form-control form-control-lg col-sm-8">gender</div>
+              <div id = 'userHeight' class="form-control form-control-lg col-sm-8">height inches</div>
+              <div id = 'userWeight' class="form-control form-control-lg col-sm-8">weight lbs</div>
+            </div>
             <div class="form-group col-6">
-              <label for="exampleFormControlTextarea1"></label>
-              <textarea class="form-control " id="exampleFormControlTextarea1" rows="6" placeholder="Your Results.."></textarea>
+              <div id = 'results' placeholder="Your Results.."></div>
+
             </div>
           </div>
   
@@ -348,7 +370,9 @@
     <p class="text-center">Fitness &copy; 2020</p>
 </footer>
   
-<script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+
+<script src="https://code.jquery.com/jquery-3.4.1.js"></script>
+
 <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 <script src = "users.js"></script>
 </body>
