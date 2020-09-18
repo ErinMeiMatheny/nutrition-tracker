@@ -123,7 +123,7 @@ app.get('/login', redirectHome, function (req, res) {
 //POST YOUR LOGIN CREDENTIALS 
 app.post('/login', redirectHome, function (req, res) {
   if (req.body.email != '' && req.body.password != '') {
-    console.log(req.body);
+    console.log(res.body);
     let encryptedPass = encryptPassword(req.body.password);
     db.one(
       `SELECT * FROM users WHERE 
@@ -134,7 +134,7 @@ app.post('/login', redirectHome, function (req, res) {
 
       req.session.user = response;
 
-      return res.render('users.ejs')
+      return res.redirect('/users')
 
     }).catch(function (error) {
       console.log(error);
@@ -183,41 +183,59 @@ app.post('/register', redirectHome, function (req, res) {
   }
 });
 
+app.get('/intake', function (req, res) {
+  db.query(`SELECT * FROM intake
+  LEFT JOIN users
+  ON intake.user_id = users.id
+  WHERE is_deleted = FALSE`)
+    .then(function (results) {
+      results.forEach(function (intake) {
+        console.log(intake.food);
+      });
+      res.json(results);
+    });
+});
 
-// app.get('/dashboard', authenticatedMiddleware, function (req, res) {
-//   res.send('Secret Info for: ' + req.session.user.username);
-// });
+app.post('/intake', function (req, res) {
+  console.log('look here', req.session.user.id)
+  db.query(`INSERT INTO intake (food,calories,carb_g,fat_g,pro_g,fiber,user_id,is_deleted)
+    VALUES ('${req.body.food}','${req.body.calories}','${req.body.carb_g}','${req.body.fat_g}','${req.body.pro_g}','${req.body.fiber}','${req.session.user.id}','FALSE') RETURNING *`)
+    .then(function (result) {
+      console.log(result);
+      res.send('OK')
+    });
 
-// app.get('/financials', authenticatedMiddleware, authorizedFinancialMiddleware, function (req, res) {
-//   res.send('This comany has 1 million dollarz');
-// });
+});
 
-//LOGS USER OUT
-// app.get('/logout',redirectLogin, function (req,res, next) {
-//   req.session.destroy(error => {
-//     if (error) {
-//       return res.redirect('/user')
-//       console.log(error)
-//     }
+//update user data
 
-//     res.clearCookie(SESSION_NAME)
-//     res.render('/')
-//   })
-//   console.log("You are now logged out of your session")
-// })
+app.put('/userdata', function (req, res) {
+  console.log(req.session.user.id)
+  db.query(`UPDATE users
+  SET name ='${req.body.name}',
+  age = '${req.body.age}',
+  height_in = '${req.body.height_in}',
+  weight_lbs = '${req.body.weight_lbs}',
+  gender = '${req.body.gender}'
+  
+  WHERE id = '${req.session.user.id}'`)
+    .then(function (results) {
+      console.log(req.session)
+      res.send('something')
+    }
+    )
 
-//LOGS USER OUT
-// app.get('/logout', redirectLogin, function (req, res, next) {
-//   if (req.sessoin){
-//     req.session.destroy(function(error) {
-//       if(error) {
-//         return next(error);
-//       } else {
-//         return res.redirect('/');
-//       }
-//     })
-//   }
-// });
+})
+
+// retrieve user data for user.ejs display
+app.get('/userdata', function (req, res) {
+  console.log("welcome", req.session.user.name)
+  db.query(`SELECT * FROM users WHERE id = '${req.session.user.id}'`)
+    .then(function (results) {
+      console.log('current', results)
+      res.send(results)
+    })
+});
 
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -230,7 +248,34 @@ app.get('/logout', (req, res) => {
 });
 
 
-// router.use('/webRoutes', webRoutes)
+
+
+
+
+app.post('/api/deleteitem', function (req, res) {
+  if(req.body.id != '' && typeof req.body.id != undefined) {
+      db.query(`SELECT id FROM intake WHERE id= ${req.body.id}`)
+        .then(function (result) {
+            if(result.length != 0) {
+              db.result(`UPDATE intake 
+               SET is_deleted = true
+               WHERE id = ${req.body.id}`)
+              .then(function (result) {
+                  res.send('Logged item deleted');
+                  console.log(result);
+              });
+            }
+            else {
+                res.send("Log does not exist");
+            }
+        })
+  }
+  else {
+      res.send('Select an intake log to delete');
+  }
+});
+
+
 
 //APP PORT LISTEN
 app.listen(portNumber, function () {

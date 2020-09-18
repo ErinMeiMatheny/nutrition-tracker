@@ -1,3 +1,46 @@
+axios.get('/userdata')
+  .then((data) => {
+    console.log(data.data)
+    document.getElementById('userAge').innerHTML = `age: ${data.data[0].age}`
+    document.getElementById('userGender').innerHTML = `gender: ${data.data[0].gender}`
+    document.getElementById('userHeight').innerHTML = `height: ${data.data[0].height_in} in`
+    document.getElementById('userWeight').innerHTML = `weight: ${data.data[0].weight_lbs} lbs`
+  })
+  .catch((error) => {
+    console.log("there's a snake in my boot")
+  })
+
+
+axios.get('/intake')
+  .then((data) => {
+    let intakeLog =document.getElementById('intakeLog')
+    for (i = 0; i < data.data.length; i++) {
+      console.log(data.data[i])
+    let intakeItem = document.createElement('div')
+    intakeItem.innerHTML=`
+    food:${data.data[i].food},
+    calories: ${data.data[i].calories},
+    carbs: ${data.data[i].carb_g}g,
+    fat: ${data.data[i].fat_g}g,
+    protein: ${data.data[i].pro_g}g,
+    fiber: ${data.data[i].fiber}g`
+    
+
+    intakeLog.appendChild(intakeItem)
+
+    let deleteButton = document.createElement('button')
+    deleteButton.innerHTML= "Delete Item"
+    intakeLog.appendChild(deleteButton)
+
+    console.log(data.data)
+    }
+  })
+  .catch((error) => {
+    console.log('error, cannot retrieve intake')
+  })
+
+
+
 let searchButton = document.getElementById('searchButton')
 
 let nutrition = []
@@ -15,11 +58,13 @@ searchButton.addEventListener('click', function () {
     .then((data) => {
       let results = document.getElementById('results')
 
+      results.innerHTML = ''
+
       nutrition = data
 
       console.log(nutrition)
 
-      for (i = 0; i < data.data.hints.length; i++) {
+      for (i = 0; i < 5; i++) {
         let resultsList = document.createElement('div')
 
         resultsList.innerHTML = data.data.hints[i].food.label
@@ -53,22 +98,66 @@ searchButton.addEventListener('click', function () {
 
           let selectedFood = nutrition.data.hints[event.target.id]
 
-          $.post('/api/intake', { "food": `${selectedFood.food.label}`,
-          "calories": `${selectedFood.food.nutrients.ENERC_KCAL}`,
-          "carb_g": `${selectedFood.food.nutrients.CHOCDF}`,
-          "fat_g": `${selectedFood.food.nutrients.FAT}`,
-          "pro_g": `${selectedFood.food.nutrients.PROCNT}`,
-          "fiber": `${selectedFood.food.nutrients.FIBTG}` }, function (response) {
+          $.post('/intake', {
+            "food": `${selectedFood.food.label}`,
+            "calories": `${selectedFood.food.nutrients.ENERC_KCAL}`,
+            "carb_g": `${selectedFood.food.nutrients.CHOCDF}`,
+            "fat_g": `${selectedFood.food.nutrients.FAT}`,
+            "pro_g": `${selectedFood.food.nutrients.PROCNT}`,
+            "fiber": `${selectedFood.food.nutrients.FIBTG}`,
+          }, function (response) {
             console.log(response)
           })
-
+          // intakeLog.append = selectedFood.food.label, {
+          //   "calories": `${selectedFood.food.nutrients.ENERC_KCAL}`,
+          //   "carb_g": `${selectedFood.food.nutrients.CHOCDF}`,
+          //   "fat_g": `${selectedFood.food.nutrients.FAT}`,
+          //   "pro_g": `${selectedFood.food.nutrients.PROCNT}`,
+          //   "fiber": `${selectedFood.food.nutrients.FIBTG}`
+          // }
         })
       }
-      document.getElementById('search').value = ''
+          })
+            .catch((error) => {
+              console.log('error')
+            })
+        })
+      
+
+  let updateButton = document.getElementById('updateButton')
 
 
-    })
-    .catch((error) => {
-      console.log('error')
-    })
-})
+  updateButton.addEventListener('click', function () {
+
+    let name = document.getElementById('name').value
+    let age = document.getElementById('age').value
+    let height_in = document.getElementById('height_in').value
+    let weight_lbs = document.getElementById('weight_lbs').value
+    let gender = document.getElementById('gender').value
+
+    age = parseInt(age)
+    height_in = parseInt(height_in)
+    weight_lbs = parseInt(weight_lbs)
+
+
+    axios.put(`/userdata`, { "name": `${name}`, "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
+      .then((data) => {
+        console.log(data)
+        console.log(age, height_in, weight_lbs, gender)
+
+        document.getElementById('age').value = ''
+        document.getElementById('height_in').value = ''
+        document.getElementById('weight_lbs').value = ''
+        document.getElementById('gender').value = ''
+
+        document.getElementById('userAge').innerHTML = `age: ${age}`
+        document.getElementById('userGender').innerHTML = `gender: ${gender}`
+        document.getElementById('userHeight').innerHTML = `height: ${height_in} in`
+        document.getElementById('userWeight').innerHTML = `weight: ${weight_lbs} lbs`
+
+      })
+      .catch((error) => {
+        console.log("somethin here ain't right")
+      })
+
+  })
