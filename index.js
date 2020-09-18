@@ -17,10 +17,11 @@ const initOptions = {
 
 // Database connection parameters:
 const config = {
-  host: 'localhost',
+  host: 'lallah.db.elephantsql.com',
   port: 5432,
-  database: 'nutrition',
-  user: 'erin'
+  database: 'bimpyezd',
+  user: 'bimpyezd',
+  password: 'oAbw-tCFognawMn-HuJdACfPrlK_apH8'
 };
 
 // Load and initialize pg-promise:
@@ -118,7 +119,6 @@ app.get('/users', redirectLogin, function (req, res) {
     name: req.session.user.name
   }
   res.render('users.ejs', { name: `${sessionData.name}`});
-  res.status(200).send()
 });
 
 //LOGIN PAGE
@@ -127,7 +127,7 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 //POST YOUR LOGIN CREDENTIALS 
-app.post('/login', redirectHome, function (req, res) {
+app.post('/login', function (req, res) {
   if (req.body.email != '' && req.body.password != '') {
     console.log(req.body);
     let encryptedPass = encryptPassword(req.body.password);
@@ -205,7 +205,37 @@ app.get('/intake', function (req, res) {
 });
 
 app.get('/calories', function(req,res){
+  db.query(`SELECT SUM(calories)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/carbs', function(req,res){
   db.query(`SELECT SUM(carb_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/fats', function(req,res){
+  db.query(`SELECT SUM(fat_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/protein', function(req,res){
+  db.query(`SELECT SUM(pro_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}; `)
     .then(function(results){

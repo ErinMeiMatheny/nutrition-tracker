@@ -24,13 +24,35 @@ axios.get('/intake')
 
 axios.get('/calories')
     .then((data)=>{
-    
-        console.log("total calories are",data.data[0].sum)
+        document.getElementById('calories').innerHTML = data.data[0].sum
     })
     .catch((error)=>{
         console.log('cannot load calories')
     })
 
+    axios.get('/carbs')
+    .then((data)=>{
+        document.getElementById('carbs').innerHTML = data.data[0].sum
+    })
+    .catch((error)=>{
+        console.log('cannot load calories')
+    })
+
+    axios.get('/fats')
+    .then((data)=>{
+        document.getElementById('fats').innerHTML = data.data[0].sum
+    })
+    .catch((error)=>{
+        console.log('cannot load calories')
+    })
+
+    axios.get('/protein')
+    .then((data)=>{
+        document.getElementById('protein').innerHTML = data.data[0].sum
+    })
+    .catch((error)=>{
+        console.log('cannot load calories')
+    })
 
 let searchButton = document.getElementById('searchButton')
 
