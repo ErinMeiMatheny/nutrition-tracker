@@ -38,11 +38,10 @@ header,
 
 
 
-@media (max-width: 991px) {
+/* @media (max-width: 991px) {
   .navbar:not(.top-nav-collapse) {
-    background: #424f95 !important;
   }
-}
+} */
 
 .btn-white {
   color: black !important;

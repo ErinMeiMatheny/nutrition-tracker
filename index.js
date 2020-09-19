@@ -4,6 +4,7 @@ const promise = require('bluebird');
 const portNumber = process.env.PORT || 3000;
 const session = require('express-session');
 const pbkdf2 = require('pbkdf2');
+const flash = require('connect-flash');
 
 // const webRoutes = ('/api/webRoutes')
 // const router = express.Router()
@@ -67,6 +68,14 @@ app.use(session({
 
 }));
 
+app.use(flash());
+
+//Flash Messages 
+app.use((req, res, next) => {
+  res.locals.message = req.session.message
+  delete req.session.message
+  next()
+})
 
 //encrypts password
 function encryptPassword(password) {
@@ -123,7 +132,7 @@ app.get('/users', redirectLogin, function (req, res) {
   let sessionData = {
     name: req.session.user.name
   }
-  res.render('users.ejs', { name: `${sessionData.name}`});
+  res.render('users.ejs', { name: `${sessionData.name}` });
 });
 
 //LOGIN PAGE
@@ -132,27 +141,47 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 //POST YOUR LOGIN CREDENTIALS 
-app.post('/login', function (req, res) {
-  if (req.body.email != '' && req.body.password != '') {
-    console.log(req.body);
-    let encryptedPass = encryptPassword(req.body.password);
+app.post('/login', (req, res) => {
+
+  let user = req.body.email;
+  let password = req.body.password;
+  let userOnFile = db.one(`SELECT * FROM users WHERE email = '${req.body.email}'`);
+  let encryptedPass = encryptPassword(password);
+
+  if (user == '' || password == '') {
+    req.session.message = {
+      type: 'danger',
+      intro: 'Missing field!',
+      message: 'Please ensure you enter both an email and password!'
+    }
+    res.redirect('/login')
+  }
+
+  else {
+
     db.one(
       `SELECT * FROM users WHERE 
-        email = '${req.body.email}' AND 
-        password = '${encryptedPass}'`
-    ).then(function (response) {
+email = '${req.body.email}' AND 
+password = '${encryptedPass}'`)
 
-      req.session.user = response;
+      .then(function (response) {
 
-      return res.redirect('/users')
+        console.log(response);
+        req.session.user = response;
+        return res.redirect('/users')
 
-    }).catch(function (error) {
-      res.send('error');
-    });
-  } else {
-    res.send('Please send a username and password');
+      }).catch(function (error) {
+        console.log(error);
+        req.session.message = {
+          type: 'danger',
+          intro: 'Incorrect Password',
+          message: 'Please ensure you enter both an email and password!'
+        }
+        res.redirect('/login')
+
+      });
   }
-})
+});
 
 
 //REGISTER PAGE
@@ -208,41 +237,42 @@ app.get('/intake', function (req, res) {
     });
 });
 
-app.get('/calories', function(req,res){
+app.get('/calories', function (req, res) {
   db.query(`SELECT SUM(calories)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/carbs', function(req,res){
+app.get('/carbs', function (req, res) {
   db.query(`SELECT SUM(carb_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/fats', function(req,res){
+app.get('/fats', function (req, res) {
   db.query(`SELECT SUM(fat_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/protein', function(req,res){
+app.get('/protein', function (req, res) {
   db.query(`SELECT SUM(pro_g)
   FROM intake
-  WHERE user_id = ${req.session.user.id}; `)
-    .then(function(results){
+  WHERE user_id = ${req.session.user.id} 
+  AND is_deleted = FALSE;`)
+    .then(function (results) {
       res.json(results)
     })
 })

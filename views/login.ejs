@@ -1,160 +1,138 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Nutrition Tracker</title>
 
-    <!-- JQuery -->
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <title>Nutrition Tracker</title>
 
-    <!-- Bootstrap 4.4.1 -->
-    <link
-      rel="stylesheet"
-      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
-    />
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <!-- JQuery -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
-    <!-- Fontawesome 5.11.2 -->
-    <link
-      rel="stylesheet"
-      href="https://use.fontawesome.com/releases/v5.11.2/css/all.css"
-    />
+  <!-- Bootstrap 4.4.1 -->
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" />
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
 
-    <link rel="stylesheet" href="style.css" />
+  <!-- Fontawesome 5.11.2 -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.11.2/css/all.css" />
+
+  <link rel="stylesheet" href="style.css" />
 
 
-  </head>
-  <!------------------------------HEAD-------------------------------->
-  <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
-      <a class="navbar-brand" href="#">
-        <img
-          src="images/body-weighing-scale.jpg"
-          width="30"
-          height="30"
-          class="d-inline-block align-top"
-          alt=""
-          loading="lazy"
-        />
-        fitness
-      </a>
-      <button
-        class="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarSupportedContent"
-        aria-controls="navbarSupportedContent"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span class="navbar-toggler-icon"></span>
-      </button>
+</head>
+<!------------------------------HEAD-------------------------------->
 
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item active">
-            <a class="nav-link" href="/"
-              >Home <span class="sr-only">(current)</span></a
-            >
-          </li>
-        </ul>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-light bg-light sticky-top">
+    <a class="navbar-brand" href="#">
+      <img src="images/body-weighing-scale.jpg" width="30" height="30" class="d-inline-block align-top" alt=""
+        loading="lazy" />
+      fitness
+    </a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item active">
+          <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+        </li>
+      </ul>
+    </div>
+  </nav>
+  <!-- Navigation -->
+  <!-- FLASH MESSAGE START -->
+
+  <% if (message) { %>
+  <div style="text-align: center" class="alert alert-danger alert-dismissible fade show">
+    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+    <strong><%=message.intro%></strong>
+    <strong><%=message.message%></strong>
+  </div>
+  <% } %>
+  <!-- START FORM -->
+  <div class="container">
+    <div class="row">
+      <div class="col-md-12">
+        <h1 class="display-2">Login</h1>
+
+        <form action="/login" method="POST">
+          <div class="form-group">
+            <label for="email">Email address</label>
+            <input type="text" class="form-control" id="email" name="email" />
+          </div>
+          <div class="form-group">
+            <label for="exampleInputPassword1">Password</label>
+            <input type="password" class="form-control" id="password" name="password" />
+          </div>
+          <button type="submit" class="btn btn-primary">Login</button>
+        </form>
       </div>
-    </nav>
-    <!-- Navigation -->
+    </div>
+  </div>
 
-    <!-- START FORM -->
-    <div class="container">
-      <div class="row">
-        <div class="col-md-12">
-          <h1 class="display-2">Login</h1>
-          
-          <form action="/login" method="POST">
-            <div class="form-group">
-              <label for="email">Email address</label>
-              <input
-                type="text"
-                class="form-control"
-                id="email"
-                name="email"
-              />
-            </div>
-            <div class="form-group">
-              <label for="exampleInputPassword1">Password</label>
-              <input
-                type="password"
-                class="form-control"
-                id="password"
-                name="password"
-              />
-            </div>
-            <button type="submit" class="btn btn-primary">Login</button>
-          </form>
-        </div>
+  <!-----------------------------footer------------------------------------------>
+  <footer class="container-fluid bg-dark p-5">
+    <div class="row">
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Home</h6>
+        <hr />
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+      </div>
+
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Blank#2</h6>
+        <hr />
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+      </div>
+
+      <div class="col-sm-3">
+        <h6 class="text-secondary">Blank#3</h6>
+        <hr />
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+
+        <h6 class="text-secondary">example</h6>
+        <p></p>
+      </div>
+
+      <div class="col-sm-3" id="contactAnchor">
+        <h6 class="text-secondary">Contact</h6>
+        <hr />
+        <p><i class="fas fa-envelope"></i> Fitness.com</p>
+        <p>
+          <i class="fas fa-camera"></i> instagram <br /><i class="fab fa-facebook-square"></i>
+          facebook <br /><i class="fab fa-twitter-square"></i> twitter
+          <br /><i class="fab fa-google-plus-square"></i> google+
+        </p>
       </div>
     </div>
 
-    <!-----------------------------footer------------------------------------------>
-    <footer class="container-fluid bg-dark p-5">
-      <div class="row">
-        <div class="col-sm-3">
-          <h6 class="text-secondary">Home</h6>
-          <hr />
-          <h6 class="text-secondary">example</h6>
-          <p></p>
+    <p class="text-center">Fitness &copy; 2020</p>
+  </footer>
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+</body>
 
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-        </div>
-
-        <div class="col-sm-3">
-          <h6 class="text-secondary">Blank#2</h6>
-          <hr />
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-        </div>
-
-        <div class="col-sm-3">
-          <h6 class="text-secondary">Blank#3</h6>
-          <hr />
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-
-          <h6 class="text-secondary">example</h6>
-          <p></p>
-        </div>
-
-        <div class="col-sm-3" id="contactAnchor">
-          <h6 class="text-secondary">Contact</h6>
-          <hr />
-          <p><i class="fas fa-envelope"></i> Fitness.com</p>
-          <p>
-            <i class="fas fa-camera"></i> instagram <br /><i
-              class="fab fa-facebook-square"
-            ></i>
-            facebook <br /><i class="fab fa-twitter-square"></i> twitter
-            <br /><i class="fab fa-google-plus-square"></i> google+
-          </p>
-        </div>
-      </div>
-
-      <p class="text-center">Fitness &copy; 2020</p>
-    </footer>
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  </body>
 </html>
