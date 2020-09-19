@@ -106,6 +106,18 @@
     </nav>
     <!-- Navigation -->
 
+    <!-- FLASH MESSAGE START -->
+
+    <% if (message) { %>
+      <div style="text-align: center" class="alert alert-dismissible alert-{{flash.type}}">
+        <button type="button" class="close"
+        data-dismiss="alert" aria-hidden="true">&times;</button>
+        <strong><%=message.intro%></strong>
+        <strong><%=message.message%></strong>
+    </div>
+  <% } %>
+
+  
     <!-- START FORM -->
     <div class="container">
       <div class="row">
