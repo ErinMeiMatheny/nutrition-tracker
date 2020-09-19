@@ -183,8 +183,8 @@ app.post('/login', (req, res) => {
   } else {
     req.session.message = {
       type: 'danger',
-      intro: 'Missing Password',
-      message: 'Please ensure you enter both an email and password!'
+      intro: 'Incorrect password:',
+      message: 'Please try your password again!'
     }
     res.redirect('/login')
   }
