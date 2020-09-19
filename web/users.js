@@ -1,8 +1,5 @@
-
-
 axios.get('/userdata')
     .then((data) => {
-        console.log(data.data)
         document.getElementById('userAge').innerHTML = `age: ${data.data[0].age}`
         document.getElementById('userGender').innerHTML = `gender: ${data.data[0].gender}`
         document.getElementById('userHeight').innerHTML = `height: ${data.data[0].height_in} in`
@@ -15,46 +12,97 @@ axios.get('/userdata')
 
 axios.get('/intake')
     .then((data) => {
+        let intakeLog = document.getElementById('intakeLog')
         for (i = 0; i < data.data.length; i++) {
-            console.log(data.data[i])
+            let intakeItem = document.createElement('div')
+            intakeItem.innerHTML = `
+      food:${data.data[i].food},
+      calories: ${data.data[i].calories},
+      carbs: ${data.data[i].carb_g}g,
+      fat: ${data.data[i].fat_g}g,
+      protein: ${data.data[i].pro_g}g,
+      fiber: ${data.data[i].fiber}g`
+
+            intakeLog.appendChild(intakeItem)
+
+            let deleteButton = document.createElement('button')
+            deleteButton.innerHTML = "Delete Item"
+
+            intakeLog.appendChild(deleteButton)
+
+            deleteButton.id = data.data[i].id
+
+            deleteButton.addEventListener('click', function(){
+                console.log('Delete Button Works')
+                console.log(data.data)
+                intakeLog.removeChild(intakeItem)
+                intakeLog.removeChild(deleteButton)
+                
+// delete button
+                axios.put('/deleteItem',{"id" : `${deleteButton.id}`})
+                    .then((data)=>{
+                        console.log("item has been deleted")
+                    })
+                    .catch((error)=>{
+                        console.log(error + "could not delte item")
+                    })
+            })
+
         }
     })
     .catch((error) => {
         console.log('error, cannot retrieve intake')
     })
 
-axios.get('/calories')
-    .then((data)=>{
-        document.getElementById('calories').innerHTML = data.data[0].sum
-    })
-    .catch((error)=>{
-        console.log('cannot load calories')
-    })
+let calButton = document.getElementById('calButton')
 
+calButton.addEventListener('click', function () {
+    axios.get('/calories')
+        .then((data) => {
+            console.log("calories are" + data.data[0].sum)
+
+            document.getElementById('calories').innerHTML = "calories " + data.data[0].sum
+        })
+        .catch((error) => {
+            console.log('cannot load calories')
+        })
+})
+
+let carbButton = document.getElementById('carbButton')
+
+carbButton.addEventListener('click', function () {
     axios.get('/carbs')
-    .then((data)=>{
-        document.getElementById('carbs').innerHTML = data.data[0].sum
-    })
-    .catch((error)=>{
-        console.log('cannot load calories')
-    })
+        .then((data) => {
+            document.getElementById('carbs').innerHTML = "carbs " + data.data[0].sum
+        })
+        .catch((error) => {
+            console.log('cannot load carbs')
+        })
+})
 
+let fatButton = document.getElementById('fatButton')
+
+fatButton.addEventListener('click', function () {
     axios.get('/fats')
-    .then((data)=>{
-        document.getElementById('fats').innerHTML = data.data[0].sum
-    })
-    .catch((error)=>{
-        console.log('cannot load calories')
-    })
+        .then((data) => {
+            document.getElementById('fats').innerHTML = "fats " + data.data[0].sum
+        })
+        .catch((error) => {
+            console.log('cannot load fats')
+        })
+})
 
+let proButton = document.getElementById('proButton')
+
+proButton.addEventListener('click', function () {
     axios.get('/protein')
-    .then((data)=>{
-        document.getElementById('protein').innerHTML = data.data[0].sum
-    })
-    .catch((error)=>{
-        console.log('cannot load calories')
-    })
-
+        .then((data) => {
+            document.getElementById('protein').innerHTML = "protein " + data.data[0].sum
+        })
+        .catch((error) => {
+            console.log('cannot load protein')
+        })
+})
 
 let searchButton = document.getElementById('searchButton')
 
@@ -116,6 +164,7 @@ searchButton.addEventListener('click', function () {
 
                     let selectedFood = nutrition.data.hints[event.target.id]
 
+                    console.log(typeof selectedFood.food.nutrients.FAT)
                     $.post('/intake', {
                         "food": `${selectedFood.food.label}`,
                         "calories": `${selectedFood.food.nutrients.ENERC_KCAL}`,
@@ -126,7 +175,26 @@ searchButton.addEventListener('click', function () {
                     }, function (response) {
                         console.log(response)
                     })
+                    let newLog = document.createElement('div')
+                    newLog.innerHTML = `food: ${selectedFood.food.label} ,
+                    calories: ${selectedFood.food.nutrients.ENERC_KCAL},
+                    carb: ${selectedFood.food.nutrients.CHOCDF},
+                    fat: ${selectedFood.food.nutrients.FAT},
+                    protein: ${selectedFood.food.nutrients.PROCNT},
+                    fiber: ${selectedFood.food.nutrients.FIBTG}
+                    `
 
+                    let deleteButton = document.createElement('button')
+                    deleteButton.innerHTML = 'Delete Item'
+
+                    intakeLog.appendChild(newLog)
+                    intakeLog.appendChild(deleteButton)
+
+                    deleteButton.addEventListener('click', function(){
+                        console.log('Delete Button Works')
+                        intakeLog.removeChild(newLog)
+                        intakeLog.removeChild(deleteButton)
+                    })
                 })
             }
             document.getElementById('search').value = ''
@@ -143,7 +211,6 @@ let updateButton = document.getElementById('updateButton')
 
 updateButton.addEventListener('click', function () {
 
-    let name = document.getElementById('name').value
     let age = document.getElementById('age').value
     let height_in = document.getElementById('height_in').value
     let weight_lbs = document.getElementById('weight_lbs').value
@@ -154,7 +221,7 @@ updateButton.addEventListener('click', function () {
     weight_lbs = parseInt(weight_lbs)
 
 
-    axios.put(`/userdata`, { "name": `${name}`, "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
+    axios.put(`/userdata`, { "age": `${age}`, "height_in": `${height_in}`, "weight_lbs": `${weight_lbs}`, "gender": `${gender}` })
         .then((data) => {
             console.log(data)
             console.log(age, height_in, weight_lbs, gender)

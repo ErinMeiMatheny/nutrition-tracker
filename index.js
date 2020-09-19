@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const promise = require('bluebird');
@@ -14,8 +13,6 @@ const initOptions = {
   // Use a custom promise library, instead of the default ES6 Promise:
 
   promiseLib: promise,
-
-
 };
 
 // Database connection parameters:
@@ -42,7 +39,6 @@ app.use(express.static(__dirname + '/web'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 //const for our cookie
 const {
   PORT = 3000,
@@ -51,11 +47,10 @@ const {
   SESSION_NAME = 'sid',
 
   SESSION_SECRET = 'tacocat',
-  SESSION_LIFETIME = 60000
+  SESSION_LIFETIME = 600000
 } = process.env
 
 const IN_PRODUCTION = NODE_ENV === 'PRODUCTION'
-
 
 //session
 app.use(session({
@@ -65,7 +60,6 @@ app.use(session({
   saveUninitialized: false,
   secret: SESSION_SECRET,
   cookie: {
-    
     maxAge: SESSION_LIFETIME,
     sameSite: true,
     secure: IN_PRODUCTION
@@ -147,14 +141,12 @@ app.post('/login', function (req, res) {
         email = '${req.body.email}' AND 
         password = '${encryptedPass}'`
     ).then(function (response) {
-      console.log(response);
 
       req.session.user = response;
 
       return res.redirect('/users')
 
     }).catch(function (error) {
-      console.log(error);
       res.send('error');
     });
   } else {
@@ -184,7 +176,6 @@ app.post('/register', redirectHome, function (req, res) {
           VALUES ('${req.body.name}','${req.body.age}','${req.body.gender}','${req.body.height_in}','${req.body.weight_lbs}','${email}','${encryptedPass}')
           RETURNING *`)
             .then(function (result) {
-              console.log(result);
               res.send('result');
 
             })
@@ -203,9 +194,11 @@ app.post('/register', redirectHome, function (req, res) {
 
 //post food
 app.get('/intake', function (req, res) {
-  db.query(`SELECT * FROM intake
-  LEFT JOIN users
-  ON intake.user_id = users.id`)
+  db.query(`SELECT * FROM users
+  RIGHT JOIN intake
+  ON intake.user_id = users.id
+  WHERE is_deleted = FALSE
+  AND user_id = ${req.session.user.id}`)
     .then(function (results) {
       results.forEach(function (intake) {
         console.log(intake.food);
@@ -265,13 +258,22 @@ app.post('/intake', function (req, res) {
 
 });
 
+//delete food
+app.put('/deleteItem', function (req, res) {
+  db.query(`UPDATE intake
+  SET is_deleted = TRUE
+  WHERE id = ${req.body.id}`)
+    .then(function (results) {
+      console.log(req)
+      res.json("OK")
+    })
+});
 //update user data
 
 app.put('/userdata', function (req, res) {
   console.log(req.session.user.id)
   db.query(`UPDATE users
-  SET name ='${req.body.name}',
-  age = '${req.body.age}',
+  SET age = '${req.body.age}',
   height_in = '${req.body.height_in}',
   weight_lbs = '${req.body.weight_lbs}',
   gender = '${req.body.gender}'
@@ -290,45 +292,10 @@ app.get('/userdata', function (req, res) {
   console.log("welcome", req.session.user.name)
   db.query(`SELECT * FROM users WHERE id = '${req.session.user.id}'`)
     .then(function (results) {
-      console.log('current', results)
+      console.log('current', req.session)
       res.send(results)
     })
 })
-
-// app.get('/dashboard', authenticatedMiddleware, function (req, res) {
-//   res.send('Secret Info for: ' + req.session.user.username);
-// });
-
-// app.get('/financials', authenticatedMiddleware, authorizedFinancialMiddleware, function (req, res) {
-//   res.send('This comany has 1 million dollarz');
-// });
-
-//LOGS USER OUT
-// app.get('/logout',redirectLogin, function (req,res, next) {
-//   req.session.destroy(error => {
-//     if (error) {
-//       return res.redirect('/user')
-//       console.log(error)
-//     }
-
-//     res.clearCookie(SESSION_NAME)
-//     res.render('/')
-//   })
-//   console.log("You are now logged out of your session")
-// })
-
-//LOGS USER OUT
-// app.get('/logout', redirectLogin, function (req, res, next) {
-//   if (req.sessoin){
-//     req.session.destroy(function(error) {
-//       if(error) {
-//         return next(error);
-//       } else {
-//         return res.redirect('/');
-//       }
-//     })
-//   }
-// });
 
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -339,8 +306,6 @@ app.get('/logout', (req, res) => {
   });
 
 });
-
-
 // router.use('/webRoutes', webRoutes)
 
 //APP PORT LISTEN

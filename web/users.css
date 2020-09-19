@@ -58,4 +58,18 @@
 
  #results{
    background-color: whitesmoke;
+   opacity: 75%
  }
+
+ .macro{
+   display: flex;
+   justify-content: space-between;
+   background-color: whitesmoke;
+   opacity: 75%;
+   height:50px;
+ }
+ #intakeLog{
+   background-color: whitesmoke;
+   opacity:75%;
+ }
+
