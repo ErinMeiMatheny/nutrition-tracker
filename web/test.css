@@ -1,0 +1,65 @@
+html,
+body,
+header,
+.view {
+  height: 100%;
+}
+
+@media (max-width: 740px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 1000px;
+  }
+}
+@media (min-width: 800px) and (max-width: 850px) {
+  html,
+  body,
+  header,
+  .view {
+    height: 600px;
+  }
+}
+
+.btn .fa {
+  margin-left: 3px;
+}
+
+.top-nav-collapse {
+  background-color: #424f95 !important;
+}
+.navbar{
+   
+        background: transparent !important;
+      
+}
+
+
+
+@media (max-width: 991px) {
+  .navbar:not(.top-nav-collapse) {
+    background: #424f95 !important;
+  }
+}
+
+.btn-white {
+  color: black !important;
+}
+
+h6 {
+  line-height: 1.7;
+}
+
+.rgba-gradient {
+    background: -moz-linear-gradient(45deg, rgba(225, 240, 202, 0.7), rgba(136, 231, 160, 0.7) 100%);
+    background: -webkit-linear-gradient(45deg, rgba(233, 241, 213, 0.7), rgba(112, 231, 128, 0.7) 100%);
+    
+    background: -o-linear-gradient(45deg, rgba(193, 187, 235, 0.7), rgba(101, 216, 145, 0.7) 100%);
+    background: linear-gradient(to 45deg, rgba(188, 182, 233, 0.7), rgba(102, 211, 139, 0.7) 100%);
+  }
+
+  .form-container {
+      padding-top: 30px;
+      opacity: .75;
+  }

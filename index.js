@@ -20,7 +20,7 @@ const config = {
   host: 'localhost',
   port: 5432,
   database: 'nutrition',
-  user: 'erin'
+  user: 'ernestocarrilloguerrero'
 };
 
 // Load and initialize pg-promise:
@@ -166,11 +166,12 @@ app.get('/', function (req, res) {
                 db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${encryptedPass}') RETURNING *`)
                     .then(function (result) {
                         console.log(result);
-                        res.render('login.ejs');
+                        res.rsend(result);
 
                     })
             } else {
                 console.log('this email is in use')
+                res.send('this email is in use')
             }
 
         }
