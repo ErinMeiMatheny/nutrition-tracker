@@ -138,29 +138,51 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 //POST YOUR LOGIN CREDENTIALS 
-app.post('/login', function (req, res) {
-  if (req.body.email != '' && req.body.password != '') {
-    console.log(req.body);
-    let encryptedPass = encryptPassword(req.body.password);
+app.post('/login', (req, res) => {
+
+  let user = req.body.email;
+  let password = req.body.password;
+  let userOnFile = db.one(`SELECT * FROM users WHERE email = '${req.body.email}'`);
+  let encryptedPass = encryptPassword(password);
+
+  if (user == '' || password == '') {
+    req.session.message = {
+      type: 'danger',
+      intro: 'Missing field!',
+      message: 'Please ensure you enter both an email and password!'
+    }
+    res.redirect('/login')
+  }
+
+  else if (password == encryptedPass){
     db.one(
       `SELECT * FROM users WHERE 
-        email = '${req.body.email}' AND 
-        password = '${encryptedPass}'`
-    ).then(function (response) {
+    email = '${req.body.email}' AND 
+    password = '${encryptedPass}'`)
+   
+    .then(function(response) {
+     
       console.log(response);
-
       req.session.user = response;
-
       return res.redirect('/users')
 
     }).catch(function (error) {
       console.log(error);
-      res.send('error');
+      
     });
+    
+  
+
   } else {
-    res.send('Please send a username and password');
+    req.session.message = {
+      type: 'danger',
+      intro: 'Missing Password',
+      message: 'Please ensure you enter both an email and password!'
+    }
+    res.redirect('/login')
   }
-})
+
+});
 
 
 //REGISTER PAGE
