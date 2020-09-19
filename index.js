@@ -5,7 +5,7 @@ const promise = require('bluebird');
 const portNumber = process.env.PORT || 3000;
 const session = require('express-session');
 const pbkdf2 = require('pbkdf2');
-
+const flash = require('connect-flash')
 // const webRoutes = ('/api/webRoutes')
 // const router = express.Router()
 
@@ -72,7 +72,14 @@ app.use(session({
   }
 
 }));
+app.use(flash());
 
+//Flash Messages 
+app.use((req, res, next) => {
+  res.locals.message = req.session.message
+  delete req.session.message
+  next()
+})
 
 //encrypts password
 function encryptPassword(password) {
