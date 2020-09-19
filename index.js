@@ -1,4 +1,3 @@
-
 const express = require('express');
 const app = express();
 const promise = require('bluebird');
@@ -12,15 +11,19 @@ const pbkdf2 = require('pbkdf2');
 // pg-promise initialization options:
 const initOptions = {
   // Use a custom promise library, instead of the default ES6 Promise:
+
   promiseLib: promise,
 };
 
 // Database connection parameters:
 const config = {
-  host: 'localhost',
+
+  host: 'lallah.db.elephantsql.com',
   port: 5432,
-  database: 'nutrition',
-  user: 'brandonhill'
+  database: 'bimpyezd',
+  user: 'bimpyezd',
+  password: 'oAbw-tCFognawMn-HuJdACfPrlK_apH8'
+
 };
 
 // Load and initialize pg-promise:
@@ -36,18 +39,18 @@ app.use(express.static(__dirname + '/web'));
 app.use(express.urlencoded({ extended: false }));
 app.use(express.json());
 
-
 //const for our cookie
 const {
   PORT = 3000,
   NODE_ENV = 'development',
+
   SESSION_NAME = 'sid',
+
   SESSION_SECRET = 'tacocat',
-  SESSION_LIFETIME = 60000
+  SESSION_LIFETIME = 600000
 } = process.env
 
 const IN_PRODUCTION = NODE_ENV === 'PRODUCTION'
-
 
 //session
 app.use(session({
@@ -87,7 +90,9 @@ function redirectLogin(req, res, next) {
 // redirects if user id is already authenticated
 function redirectHome(req, res, next) {
   if (req.session.user) {
-    res.render('users')
+
+    res.redirect('/users')
+
   } else {
     next()
   }
@@ -103,6 +108,7 @@ function authorizedFinancialMiddleware(req, res, next) {
 
 //LANDING PAGE
 app.get('/', function (req, res) {
+
   console.log(req.session)
   const { userId } = req.session
 
@@ -112,7 +118,12 @@ app.get('/', function (req, res) {
 //USER PAGE AFTER LOGIN AUTHENTICATED
 app.get('/users', redirectLogin, function (req, res) {
   console.log(req.sessionID)
-  res.render('users.ejs');
+  console.log('you are on/users page')
+
+  let sessionData = {
+    name: req.session.user.name
+  }
+  res.render('users.ejs', { name: `${sessionData.name}`});
 });
 
 //LOGIN PAGE
@@ -121,23 +132,21 @@ app.get('/login', redirectHome, function (req, res) {
 });
 
 //POST YOUR LOGIN CREDENTIALS 
-app.post('/login', redirectHome, function (req, res) {
+app.post('/login', function (req, res) {
   if (req.body.email != '' && req.body.password != '') {
-    console.log(res.body);
+    console.log(req.body);
     let encryptedPass = encryptPassword(req.body.password);
     db.one(
       `SELECT * FROM users WHERE 
         email = '${req.body.email}' AND 
         password = '${encryptedPass}'`
     ).then(function (response) {
-      console.log(response);
 
       req.session.user = response;
 
       return res.redirect('/users')
 
     }).catch(function (error) {
-      console.log(error);
       res.send('error');
     });
   } else {
@@ -163,15 +172,15 @@ app.post('/register', redirectHome, function (req, res) {
         if (!results[0]) {
           let encryptedPass = encryptPassword(req.body.password);
 
-          db.query(`INSERT INTO users (name,email,password) VALUES ('${req.body.name}','${email}','${encryptedPass}') RETURNING *`)
+          db.query(`INSERT INTO users (name,age,gender,height_in,weight_lbs,email,password)
+          VALUES ('${req.body.name}','${req.body.age}','${req.body.gender}','${req.body.height_in}','${req.body.weight_lbs}','${email}','${encryptedPass}')
+          RETURNING *`)
             .then(function (result) {
-              console.log(result);
-              res.send(result);
+              res.send('result');
 
             })
         } else {
-          console.log('this email is in use')
-          res.send('This email is in use')
+          res.send('this email is in use')
         }
 
       }
@@ -183,18 +192,60 @@ app.post('/register', redirectHome, function (req, res) {
   }
 });
 
+//post food
 app.get('/intake', function (req, res) {
-  db.query(`SELECT * FROM intake
-  LEFT JOIN users
+  db.query(`SELECT * FROM users
+  RIGHT JOIN intake
   ON intake.user_id = users.id
-  WHERE is_deleted = FALSE`)
+  WHERE is_deleted = FALSE
+  AND user_id = ${req.session.user.id}`)
     .then(function (results) {
       results.forEach(function (intake) {
         console.log(intake.food);
       });
+
       res.json(results);
     });
 });
+
+app.get('/calories', function(req,res){
+  db.query(`SELECT SUM(calories)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/carbs', function(req,res){
+  db.query(`SELECT SUM(carb_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/fats', function(req,res){
+  db.query(`SELECT SUM(fat_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}
+  AND is_deleted = FALSE; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
+
+app.get('/protein', function(req,res){
+  db.query(`SELECT SUM(pro_g)
+  FROM intake
+  WHERE user_id = ${req.session.user.id}; `)
+    .then(function(results){
+      res.json(results)
+    })
+})
 
 app.post('/intake', function (req, res) {
   console.log('look here', req.session.user.id)
@@ -207,13 +258,22 @@ app.post('/intake', function (req, res) {
 
 });
 
+//delete food
+app.put('/deleteItem', function (req, res) {
+  db.query(`UPDATE intake
+  SET is_deleted = TRUE
+  WHERE id = ${req.body.id}`)
+    .then(function (results) {
+      console.log(req)
+      res.json("OK")
+    })
+});
 //update user data
 
 app.put('/userdata', function (req, res) {
   console.log(req.session.user.id)
   db.query(`UPDATE users
-  SET name ='${req.body.name}',
-  age = '${req.body.age}',
+  SET age = '${req.body.age}',
   height_in = '${req.body.height_in}',
   weight_lbs = '${req.body.weight_lbs}',
   gender = '${req.body.gender}'
@@ -232,10 +292,10 @@ app.get('/userdata', function (req, res) {
   console.log("welcome", req.session.user.name)
   db.query(`SELECT * FROM users WHERE id = '${req.session.user.id}'`)
     .then(function (results) {
-      console.log('current', results)
+      console.log('current', req.session)
       res.send(results)
     })
-});
+})
 
 app.get('/logout', (req, res) => {
   req.session.destroy((err) => {
@@ -246,39 +306,9 @@ app.get('/logout', (req, res) => {
   });
 
 });
-
-
-
-
-
-
-app.post('/api/deleteitem', function (req, res) {
-  if(req.body.id != '' && typeof req.body.id != undefined) {
-      db.query(`SELECT id FROM intake WHERE id= ${req.body.id}`)
-        .then(function (result) {
-            if(result.length != 0) {
-              db.result(`UPDATE intake 
-               SET is_deleted = true
-               WHERE id = ${req.body.id}`)
-              .then(function (result) {
-                  res.send('Logged item deleted');
-                  console.log(result);
-              });
-            }
-            else {
-                res.send("Log does not exist");
-            }
-        })
-  }
-  else {
-      res.send('Select an intake log to delete');
-  }
-});
-
-
+// router.use('/webRoutes', webRoutes)
 
 //APP PORT LISTEN
 app.listen(portNumber, function () {
   console.log(`My API is listening on port ${portNumber}.... `);
 });
-
