@@ -97,7 +97,9 @@ let proButton = document.getElementById('proButton')
 proButton.addEventListener('click', function () {
     axios.get('/protein')
         .then((data) => {
+
             console.log('button works' + data.data[0].sum)
+
             document.getElementById('protein').innerHTML = "protein " + data.data[0].sum
         })
         .catch((error) => {

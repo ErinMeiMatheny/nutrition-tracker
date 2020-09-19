@@ -161,14 +161,17 @@ app.post('/login', (req, res) => {
 
     db.one(
       `SELECT * FROM users WHERE 
+
 email = '${req.body.email}' AND 
 password = '${encryptedPass}'`)
+
 
       .then(function (response) {
 
         console.log(response);
         req.session.user = response;
         return res.redirect('/users')
+
 
       }).catch(function (error) {
         console.log(error);
@@ -180,6 +183,7 @@ password = '${encryptedPass}'`)
         res.redirect('/login')
 
       });
+
   }
 });
 
