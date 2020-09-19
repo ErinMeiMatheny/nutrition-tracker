@@ -65,7 +65,7 @@ app.use(session({
   saveUninitialized: false,
   secret: SESSION_SECRET,
   cookie: {
-    
+
     maxAge: SESSION_LIFETIME,
     sameSite: true,
     secure: IN_PRODUCTION
@@ -136,7 +136,7 @@ app.get('/users', redirectLogin, function (req, res) {
   let sessionData = {
     name: req.session.user.name
   }
-  res.render('users.ejs', { name: `${sessionData.name}`});
+  res.render('users.ejs', { name: `${sessionData.name}` });
 });
 
 //LOGIN PAGE
@@ -161,35 +161,33 @@ app.post('/login', (req, res) => {
     res.redirect('/login')
   }
 
-  else if (password == encryptedPass){
+  else {
+
     db.one(
       `SELECT * FROM users WHERE 
-    email = '${req.body.email}' AND 
-    password = '${encryptedPass}'`)
-   
-    .then(function(response) {
-     
-      console.log(response);
-      req.session.user = response;
-      return res.redirect('/users')
+email = '${req.body.email}' AND 
+password = '${encryptedPass}'`)
 
-    }).catch(function (error) {
-      console.log(error);
-      
-    });
-    
-  
+      .then(function (response) {
 
-  } else {
-    req.session.message = {
-      type: 'danger',
-      intro: 'Incorrect password:',
-      message: 'Please try your password again!'
+        console.log(response);
+        req.session.user = response;
+        return res.redirect('/users')
+
+      }).catch(function (error) {
+        console.log(error);
+        req.session.message = {
+          type: 'danger',
+          intro: 'Incorrect Password',
+          message: 'Please ensure you enter both an email and password!'
+        }
+        res.redirect('/login')
+
+      });
     }
-    res.redirect('/login')
-  }
+  });
 
-});
+
 
 
 //REGISTER PAGE
@@ -244,41 +242,41 @@ app.get('/intake', function (req, res) {
     });
 });
 
-app.get('/calories', function(req,res){
+app.get('/calories', function (req, res) {
   db.query(`SELECT SUM(calories)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/carbs', function(req,res){
+app.get('/carbs', function (req, res) {
   db.query(`SELECT SUM(carb_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/fats', function(req,res){
+app.get('/fats', function (req, res) {
   db.query(`SELECT SUM(fat_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}
   AND is_deleted = FALSE; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
 
-app.get('/protein', function(req,res){
+app.get('/protein', function (req, res) {
   db.query(`SELECT SUM(pro_g)
   FROM intake
   WHERE user_id = ${req.session.user.id}; `)
-    .then(function(results){
+    .then(function (results) {
       res.json(results)
     })
 })
