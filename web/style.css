@@ -3,6 +3,7 @@ body,
 header,
 .view {
   height: 100%;
+  background-color: #d3dfe0
 }
 
 @media (max-width: 740px) {
@@ -31,7 +32,7 @@ header,
 }
 .navbar{
    
-        background: transparent !important;
+        background: #d3dfe0 !important;
       
 }
 
